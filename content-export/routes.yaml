@@ -1,0 +1,14 @@
+# Ghost routes for the Xpektrum theme. Upload via Settings → Labs → Routes (bootstrap does this).
+routes:
+  /:
+    data: page.home
+    template: custom-home
+
+collections:
+  /projects/:
+    permalink: /projects/{slug}/
+    filter: tag:project
+    template: index
+
+taxonomies:
+  tag: /tag/{slug}/

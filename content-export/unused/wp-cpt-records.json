@@ -1,0 +1,122 @@
+{
+  "scenario": [
+    {
+      "slug": "maximum-bed-size",
+      "meta": {
+        "wvc_scenario_image": 438,
+        "wvc_scenario_image_alt": "Top-down view of a large industrial laser bed with precision grid markings",
+        "wvc_scenario_title": "Maximum Bed Size",
+        "wvc_scenario_subtitle": "600 x 400 mm Working Area",
+        "wvc_scenario_description": "Our xTool P3 80W CO₂ laser features a generous workspace designed for high-volume commercial production. Whether you are manufacturing large-scale architectural signage or batch-processing corporate gifts, our equipment handles oversized materials with industrial precision and zero compromise on edge quality.",
+        "wvc_scenario_pro_tip_title": "Material Optimization",
+        "wvc_scenario_pro_tip_text": "For large orders, we utilize nesting software to maximize material yield on our 600x400mm bed, significantly reducing waste and cost for your project."
+      }
+    },
+    {
+      "slug": "supported-formats",
+      "meta": {
+        "wvc_scenario_image": 439,
+        "wvc_scenario_image_alt": "Digital blueprint of a complex mechanical part on a high-resolution monitor",
+        "wvc_scenario_title": "Supported Formats",
+        "wvc_scenario_subtitle": ".DXF, .SVG, .AI Compatibility",
+        "wvc_scenario_description": "We integrate seamlessly with your design workflow. Our systems are optimized for industry-standard vector formats, ensuring that your technical drawings and brand assets are translated into physical products with mathematical accuracy. We handle complex geometries and intricate typography with absolute fidelity to your original files.",
+        "wvc_scenario_pro_tip_title": "Vector Preparation",
+        "wvc_scenario_pro_tip_text": "Ensure all fonts are converted to outlines and lines are set to 'hairline' width in your .AI or .DXF files for the fastest processing and most accurate quote."
+      }
+    },
+    {
+      "slug": "material-thickness",
+      "meta": {
+        "wvc_scenario_image": 437,
+        "wvc_scenario_image_alt": "Macro shot of a laser beam cutting through a thick piece of polished black acrylic",
+        "wvc_scenario_title": "Material Thickness",
+        "wvc_scenario_subtitle": "Up to 15mm Cutting Depth",
+        "wvc_scenario_description": "Engineered for versatility, our 80W CO₂ beam penetrates materials up to 15mm thick. From robust acrylic panels for lobby branding to thick hardwood for hospitality displays, we deliver clean, vertical cuts that require no secondary finishing. This power ensures fast turnaround times even on heavy-duty industrial substrates.",
+        "wvc_scenario_pro_tip_title": "Edge Quality",
+        "wvc_scenario_pro_tip_text": "Thicker acrylics (10mm+) result in a 'flame-polished' edge directly from the laser, providing a premium glass-like finish without manual buffing."
+      }
+    }
+  ],
+  "industrial_id": [
+    {
+      "slug": "industrial-identification-specifications",
+      "meta": {
+        "wvc_industrial_id_main_image": 425,
+        "wvc_industrial_id_main_image_alt": "Industrial technology identification system",
+        "wvc_industrial_id_side_image_1": 434,
+        "wvc_industrial_id_side_image_1_alt": "High-precision industrial components",
+        "wvc_industrial_id_side_image_2": 431,
+        "wvc_industrial_id_side_image_2_alt": "Real-time industrial monitoring",
+        "wvc_industrial_id_trend_1_id": "trend_001",
+        "wvc_industrial_id_trend_1_title": "AI-Powered Detection",
+        "wvc_industrial_id_trend_1_description": "Advanced machine learning algorithms enable real-time identification of industrial components and systems with unprecedented accuracy",
+        "wvc_industrial_id_trend_2_id": "trend_002",
+        "wvc_industrial_id_trend_2_title": "IoT Integration",
+        "wvc_industrial_id_trend_2_description": "Seamless connectivity with Internet of Things devices provides continuous monitoring and predictive maintenance capabilities",
+        "wvc_industrial_id_trend_3_id": "trend_003",
+        "wvc_industrial_id_trend_3_title": "Cloud Analytics",
+        "wvc_industrial_id_trend_3_description": "Scalable cloud-based analytics platform processes industrial data in real-time for actionable insights"
+      }
+    },
+    {
+      "slug": "industrial-safety-tag-solutions",
+      "meta": {
+        "wvc_industrial_id_main_image": 434,
+        "wvc_industrial_id_main_image_alt": "Safety Tag System",
+        "wvc_industrial_id_side_image_1": 425,
+        "wvc_industrial_id_side_image_1_alt": "Steel Engraving",
+        "wvc_industrial_id_side_image_2": 431,
+        "wvc_industrial_id_side_image_2_alt": "Brass Plate",
+        "wvc_industrial_id_trend_1_id": "01",
+        "wvc_industrial_id_trend_1_title": "Safety Compliance",
+        "wvc_industrial_id_trend_1_description": "CSA UL and ANSI compliant marking for industrial safety applications",
+        "wvc_industrial_id_trend_2_id": "02",
+        "wvc_industrial_id_trend_2_title": "Color Contrast Options",
+        "wvc_industrial_id_trend_2_description": "High-visibility color combinations for maximum readability in any lighting",
+        "wvc_industrial_id_trend_3_id": "03",
+        "wvc_industrial_id_trend_3_title": "Permanent Marking",
+        "wvc_industrial_id_trend_3_description": "Laser-etched marks are permanent and resistant to wear chemicals and weathering"
+      }
+    },
+    {
+      "slug": "industrial-identification-solutions-stainless-steel-rowmark-tags-brass-plates",
+      "meta": {
+        "wvc_industrial_id_main_image": 434,
+        "wvc_industrial_id_main_image_alt": "Industrial Stainless Steel Panel",
+        "wvc_industrial_id_side_image_1": 425,
+        "wvc_industrial_id_side_image_1_alt": "Rowmark Safety Tags",
+        "wvc_industrial_id_side_image_2": 431,
+        "wvc_industrial_id_side_image_2_alt": "Brass Equipment Plate",
+        "wvc_industrial_id_trend_1_id": "01",
+        "wvc_industrial_id_trend_1_title": "Stainless Steel Precision",
+        "wvc_industrial_id_trend_1_description": "High-durability marking for industrial panels compliant with CSA and UL standards for extreme environments",
+        "wvc_industrial_id_trend_2_id": "02",
+        "wvc_industrial_id_trend_2_title": "Anodized Aluminum Tags",
+        "wvc_industrial_id_trend_2_description": "Laser-etched identification plates offering permanent readability and resistance to chemical abrasion",
+        "wvc_industrial_id_trend_3_id": "03",
+        "wvc_industrial_id_trend_3_title": "Multi-Layer Rowmark",
+        "wvc_industrial_id_trend_3_description": "Precision-cut safety signage and equipment plates with high-contrast lettering for maximum visibility"
+      }
+    },
+    {
+      "slug": "industrial-identification-plates",
+      "meta": {
+        "wvc_industrial_id_main_image": 434,
+        "wvc_industrial_id_main_image_alt": "Equipment Plate Detail",
+        "wvc_industrial_id_side_image_1": 425,
+        "wvc_industrial_id_side_image_1_alt": "Safety Tags Detail",
+        "wvc_industrial_id_side_image_2": 431,
+        "wvc_industrial_id_side_image_2_alt": "Stainless Steel Detail",
+        "wvc_industrial_id_trend_1_id": "01",
+        "wvc_industrial_id_trend_1_title": "Precision Cutting",
+        "wvc_industrial_id_trend_1_description": "Sub-micron accuracy for tight tolerance industrial applications",
+        "wvc_industrial_id_trend_2_id": "02",
+        "wvc_industrial_id_trend_2_title": "High-Speed Processing",
+        "wvc_industrial_id_trend_2_description": "Fast turnaround on bulk identification plate orders",
+        "wvc_industrial_id_trend_3_id": "03",
+        "wvc_industrial_id_trend_3_title": "Material Compatibility",
+        "wvc_industrial_id_trend_3_description": "Works with stainless steel anodized aluminum brass and composite materials"
+      }
+    }
+  ]
+}

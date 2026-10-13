@@ -1,0 +1,67 @@
+[
+  {
+    "from": "^/CorporateBrandingPage/?$",
+    "to": "/corporate-branding/",
+    "permanent": true
+  },
+  {
+    "from": "^/CorporateGiftsPage/?$",
+    "to": "/corporate-gifts/",
+    "permanent": true
+  },
+  {
+    "from": "^/HospitalityEventsPage/?$",
+    "to": "/private-events/",
+    "permanent": true
+  },
+  {
+    "from": "^/HospitalityPage/?$",
+    "to": "/hospitality/",
+    "permanent": true
+  },
+  {
+    "from": "^/IndustrialLabelsPage/?$",
+    "to": "/industrial-labels/",
+    "permanent": true
+  },
+  {
+    "from": "^/IndustrialSignagePage/?$",
+    "to": "/industrial-signage/",
+    "permanent": true
+  },
+  {
+    "from": "^/scenario/.*$",
+    "to": "/industrial-signage/",
+    "permanent": true
+  },
+  {
+    "from": "^/industrial_id/.*$",
+    "to": "/industrial-signage/",
+    "permanent": true
+  },
+  {
+    "from": "^/header_settings/.*$",
+    "to": "/",
+    "permanent": true
+  },
+  {
+    "from": "^/home/?$",
+    "to": "/",
+    "permanent": true
+  },
+  {
+    "from": "^/wp-sitemap(.*)\\.xml$",
+    "to": "/sitemap.xml",
+    "permanent": true
+  },
+  {
+    "from": "^/wp-content/uploads/(.*)$",
+    "to": "/",
+    "permanent": false
+  },
+  {
+    "from": "^/feed/?$",
+    "to": "/rss/",
+    "permanent": true
+  }
+]

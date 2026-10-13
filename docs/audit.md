@@ -170,3 +170,11 @@ Images: download the 94 referenced images (original files, `-scaled` resolved to
 - Quote form: hosted form service (Formspree-compatible POST endpoint configured as a theme setting), same fields, validation and success copy.
 - Contrast: primary buttons keep `#ed7a1d` with dark text `#100d1c` (6.8:1).
 - Fonts: match the rendered look (system sans stack: Helvetica Neue / Helvetica / Arial) plus self-hosted JetBrains Mono 400/500/700.
+
+## 12. Phase 2 – content export (as built)
+
+- `tools/download-images.mjs` → `tools/optimize-images.mjs` → `tools/capture-interactive.mjs` → `tools/build-content.mjs` → `tools/package-import.sh`.
+- Pages keep their live slugs. Home is a page rendered by `custom-home.hbs` via `routes.yaml`. The other 14 pages hold their cleaned, post-hydration markup in a single Lexical **HTML card** (`.xp-legacy` wrapper), with images re-pointed to Ghost and links made relative. The theme supplies the CSS and the small JS for tabs, accordions, dialogs and the quote form. Text is editable in the HTML card. The home page, projects and site settings are native Ghost content.
+- Featured home sector cards = pages tagged `#sector-featured` (card title = OG title, card text = custom excerpt): `/industrial-signage/`, `/private-events/`, `/corporate-branding/`, the same three linked in the live footer.
+- CPT records are not separate Ghost objects. Scenario data already renders on `/industrial-signage/`, and the 3 unused `industrial_id` hero variants are archived in `content-export/unused/wp-cpt-records.json`. Their URLs 301 to `/industrial-signage/`.
+- AVIF: the theme requests AVIF from Ghost's image pipeline (`{{img_url format="avif"}}`) inside `<picture>`, so only WebP sources are stored.

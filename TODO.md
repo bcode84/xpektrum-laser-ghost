@@ -8,6 +8,7 @@
 - [ ] Correct bed size: 600×400 mm (scenario) vs 700×500 mm (specs page).
 - [ ] Confirm image licences (xTool marketing hero, Vecteezy stock, Etsy/Amazon product photos).
 - [ ] Remove the "AI-Powered Detection / IoT Integration" filler on /industrial-signage/?
+- [ ] /hospitality/ gallery subtitle is in Dutch ("Ontdek onze maatwerkoplossing…"). Translate it?
 
 ## Phase 1 – capture
 - [x] Playwright capture 23 URLs × 3 widths, assets, rendered HTML
@@ -20,3 +21,11 @@
 - Fix "CONTAT" typo, "Industrial   Signage" whitespace
 - Re-host 7 images hotlinked from better-elf-dev.10web.cloud and 1 from xpektrum.io
 - 301 the CPT URLs and the 6 broken `/…Page` routes
+
+## Phase 2 – content model & export
+- [x] 99 referenced images downloaded as originals (141 MB) → WebP (10.9 MB), alt text kept (content-export/images/manifest.json)
+- [x] Tab/accordion/dialog content recovered (capture/interactive.json)
+- [x] ghost-import.json: 15 pages, 4 project posts, tags, posts_meta, settings, navigation
+- [x] redirects.json (13 rules), routes.yaml (home page route, /projects/ collection)
+- [ ] Validate the import against a running Ghost 6 (Phase 4 bootstrap)
+- [ ] Media-library archive (all 265 originals) → content-export/media-library-archive/ (not imported)

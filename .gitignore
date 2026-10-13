@@ -10,3 +10,7 @@ capture/assets/
 capture/*.log
 capture/home-rest.html
 tools/node_modules/
+# Reproducible / large: originals, archives and packaged zips (rebuild with tools/)
+content-export/images/original/
+content-export/media-library-archive/
+content-export/*.zip
