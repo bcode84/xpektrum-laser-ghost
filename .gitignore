@@ -1,0 +1,12 @@
+node_modules/
+.env
+*.log
+.DS_Store
+ghost-migration/data/
+ghost-migration/backups/
+# Large capture binaries (screenshots, mirrored assets) – kept locally only
+capture/pages/
+capture/assets/
+capture/*.log
+capture/home-rest.html
+tools/node_modules/

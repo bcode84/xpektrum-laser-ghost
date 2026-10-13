@@ -1,0 +1,74 @@
+# CO2 Laser Specifications
+https://laser.xpektrum.com/co2-laser-specifications/
+
+[A https://laser.xpektrum.com/request-a-quote/]
+Request a Quote
+Professional Precision Laser System
+xTool P3 80W CO2 Laser Technology
+Experience industrial-grade performance with our high-output CO2 laser. Engineered for speed, accuracy, and versatility across diverse materials.
+[A https://laser.xpektrum.com/request-a-quote/] Request Technical Quote
+80W Power Output
+300mm/s Speed
+0.01mm Precision
+[IMG https://xpektrum.io/wp-content/uploads/2026/05/mk-p3_us_pc_pckv_2796-2158_e27f7d23-78af-4610-8fb1-57d80cd4f87f.webp-scaled.jpeg alt="xTool P3 80W CO2 Laser industrial engraving system"]
+0.01mm Precision
+Industrial grade accuracy
+80W
+Power Output
+High-efficiency CO2 laser source for consistent cutting and engraving depth.
+700×500
+Cutting Area
+Spacious 700mm x 500mm workspace designed for versatile industrial projects.
+0.01mm
+Precision Tolerance
+Ultra-fine accuracy ensuring intricate details and perfect repeatability.
+Materials & Compatibility
+Explore the range of materials our systems can process. From delicate fabrics to dense woods, find the perfect match for your project requirements.
+Material Type
+Max Thickness
+Cutting
+Engraving
+Notes
+Acrylic
+3-8mm
+Excellent edge finish
+Wood
+0-10mm
+Plywood, MDF, Solid wood
+Leather
+0-3mm
+Genuine and synthetic
+Fabric
+0-2mm
+Cotton, felt, polyester
+Paper
+0-1mm
+Cardstock, cardboard
+Metal
+N/A
+Anodized only
+* Thickness ranges are guidelines; actual performance varies by material density and finish.
+LASER_FREQ: 20kHz / PWR: 100W
+RES: 1000 DPI / TOLERANCE: ±0.05mm
+AXIS: X-Y-Z / SYSTEM: CO2_LASER
+SPEED: 300MM/S / DEPTH: 5.0MM
+Cutting Specifications
+High-velocity processing at 50-300mm/s with a 0.1mm minimum line width, delivering smooth, precise burns across diverse materials.
+Engraving Specifications
+Adjustable depth from 0.1-5mm with resolutions up to 1000 DPI, ensuring crisp, clean marks and professional surface finishes.
+Material Versatility
+Optimized parameters for wood, acrylic, leather, and glass, maintaining edge quality and structural integrity on every project.
+[A https://laser.xpektrum.com/]
+[IMG https://better-elf-dev.10web.cloud/wp-content/uploads/2026/04/logo_gray.png alt="Xpektrum Agency"]
+Montreal-based laser engraving and cutting studio specializing in high-precision industrial and commercial solutions.
+Navigation
+Studio HQ
+Montreal, QC, Canada
++1 (438) 898-7540
+info@xpektrum.io
+Connect
+Follow our latest industrial projects and material explorations on our social channels.
+[A #]
+[A #]
+© 2026 Xpektrum Agency.
+Status: Studio Online

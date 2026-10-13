@@ -1,0 +1,54 @@
+# Request a Quote
+https://laser.xpektrum.com/request-a-quote/
+
+-->
+[A https://laser.xpektrum.com/request-a-quote/]
+Request a Quote
+Studio Coordinates
+PHONE
++1 (438) 898-7540
+CONTAT
+info@xpektrum.com
+Studio Location
+Montreal, QC H4V 2A2
+Production Hours
+Cycle
+Availability
+Monday – Friday
+08:00 – 18:00
+Saturday
+10:00 – 15:00
+Sunday
+Closed
+Materialize Vision
+Submit your technical requirements for a precision-engineered quote within 24 hours.
+[FORM class="space-y-6"]
+Name
+[FIELD input type="text" placeholder="Full Name or Agency" placeholder name="name"]
+Primary contact for technical coordination.
+Email
+[FIELD input type="email" placeholder="contact@agency.com" placeholder name="email"]
+For secure quote delivery and CAD file review.
+Phone Number
+[FIELD input type="tel" placeholder="+1 (514) 000-0000" placeholder name="phone"]
+Required for urgent production updates.
+Service Category
+[FIELD select placeholder name="project_type"]Select Production TypeIndustrial LabelingHospitality SignageCorporate BrandingCustom Fabrication
+Technical Specifications
+[FIELD textarea placeholder="Specify material (Acrylic, Wood, Metal), dimensions, and quantity..." placeholder name="project_details"]
+Include vector file availability or design requirements.
+Initialize Quote Request
+[A https://laser.xpektrum.com/]
+[IMG https://laser.xpektrum.com/wp-content/uploads/2026/04/logo_gray.png alt="Xpektrum Agency"]
+Montreal-based laser engraving and cutting studio specializing in high-precision industrial and commercial solutions.
+Navigation
+Studio HQ
+Montreal, QC, Canada
++1 (438) 898-7540
+info@xpektrum.com
+Connect
+Follow our latest industrial projects and material explorations on our social channels.
+[A #]
+[A #]
+© 2026 Xpektrum Agency.
+Status: Studio Online

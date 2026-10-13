@@ -1,0 +1,48 @@
+## about: 8 internal links, 5 <img>, 0 css-bg; offdomain hosts: ['api.w.org', 'gmpg.org', 's.w.org', 'wvc.10web.io', 'www.w3.org']
+## co2-laser-specifications: 8 internal links, 3 <img>, 0 css-bg; offdomain hosts: ['api.w.org', 'better-elf-dev.10web.cloud', 'gmpg.org', 's.w.org', 'wvc.10web.io', 'www.w3.org', 'xpektrum.io']
+## commercial-signage: 12 internal links, 9 <img>, 2 css-bg; offdomain hosts: ['api.w.org', 'gmpg.org', 's.w.org', 'wvc.10web.io', 'www.w3.org']
+## corporate-branding: 8 internal links, 4 <img>, 0 css-bg; offdomain hosts: ['api.w.org', 'gmpg.org', 's.w.org', 'wvc.10web.io', 'www.w3.org']
+## corporate-gifts: 9 internal links, 11 <img>, 0 css-bg; offdomain hosts: ['api.w.org', 'gmpg.org', 's.w.org', 'wvc.10web.io', 'www.w3.org']
+## events-weddings: 11 internal links, 9 <img>, 0 css-bg; offdomain hosts: ['api.w.org', 'better-elf-dev.10web.cloud', 'gmpg.org', 's.w.org', 'wvc.10web.io', 'www.w3.org']
+## header_settings__xpektrum-agency-header: 2 internal links, 4 <img>, 0 css-bg; offdomain hosts: ['api.w.org', 'gmpg.org', 's.w.org', 'wvc.10web.io', 'www.w3.org']
+## home: 9 internal links, 7 <img>, 1 css-bg; offdomain hosts: ['api.w.org', 'gmpg.org', 's.w.org', 'wvc.10web.io', 'www.w3.org']
+## hospitality: 9 internal links, 14 <img>, 1 css-bg; offdomain hosts: ['api.w.org', 'gmpg.org', 's.w.org', 'wvc.10web.io', 'www.w3.org']
+## industrial-labels: 9 internal links, 3 <img>, 0 css-bg; offdomain hosts: ['api.w.org', 'gmpg.org', 's.w.org', 'wvc.10web.io', 'www.w3.org']
+## industrial-signage: 8 internal links, 8 <img>, 0 css-bg; offdomain hosts: ['api.w.org', 'gmpg.org', 's.w.org', 'wvc.10web.io', 'www.w3.org']
+## industrial_id__industrial-identification-plates: 2 internal links, 4 <img>, 0 css-bg; offdomain hosts: ['api.w.org', 'gmpg.org', 's.w.org', 'wvc.10web.io', 'www.w3.org']
+## industrial_id__industrial-identification-solutions-stainless-steel-rowmark-tags-brass-plates: 2 internal links, 4 <img>, 0 css-bg; offdomain hosts: ['api.w.org', 'gmpg.org', 's.w.org', 'wvc.10web.io', 'www.w3.org']
+## industrial_id__industrial-identification-specifications: 2 internal links, 4 <img>, 0 css-bg; offdomain hosts: ['api.w.org', 'gmpg.org', 's.w.org', 'wvc.10web.io', 'www.w3.org']
+## industrial_id__industrial-safety-tag-solutions: 2 internal links, 4 <img>, 0 css-bg; offdomain hosts: ['api.w.org', 'gmpg.org', 's.w.org', 'wvc.10web.io', 'www.w3.org']
+## portfolio: 9 internal links, 21 <img>, 0 css-bg; offdomain hosts: ['api.w.org', 'gmpg.org', 's.w.org', 'wvc.10web.io', 'www.w3.org']
+## private-events: 10 internal links, 13 <img>, 1 css-bg; offdomain hosts: ['api.w.org', 'gmpg.org', 's.w.org', 'wvc.10web.io', 'www.w3.org']
+## request-a-quote: 8 internal links, 2 <img>, 0 css-bg; offdomain hosts: ['api.w.org', 'gmpg.org', 's.w.org', 'wvc.10web.io', 'www.w3.org']
+## scenario__material-thickness: 2 internal links, 4 <img>, 0 css-bg; offdomain hosts: ['api.w.org', 'gmpg.org', 's.w.org', 'wvc.10web.io', 'www.w3.org']
+## scenario__maximum-bed-size: 2 internal links, 4 <img>, 0 css-bg; offdomain hosts: ['api.w.org', 'gmpg.org', 's.w.org', 'wvc.10web.io', 'www.w3.org']
+## scenario__supported-formats: 2 internal links, 4 <img>, 0 css-bg; offdomain hosts: ['api.w.org', 'gmpg.org', 's.w.org', 'wvc.10web.io', 'www.w3.org']
+## services: 17 internal links, 9 <img>, 0 css-bg; offdomain hosts: ['api.w.org', 'gmpg.org', 's.w.org', 'wvc.10web.io', 'www.w3.org']
+## solutions: 13 internal links, 8 <img>, 0 css-bg; offdomain hosts: ['api.w.org', 'gmpg.org', 's.w.org', 'wvc.10web.io', 'www.w3.org']
+
+## inbound links per path
+/                                                            <- 23 pages
+/CorporateBrandingPage                                       <- 1 pages
+/CorporateGiftsPage                                          <- 2 pages
+/HospitalityEventsPage                                       <- 3 pages
+/HospitalityPage                                             <- 2 pages
+/IndustrialLabelsPage                                        <- 1 pages
+/IndustrialSignagePage                                       <- 2 pages
+/about                                                       <- 15 pages
+/co2-laser-specifications                                    <- 1 pages
+/commercial-signage                                          <- 1 pages
+/corporate-branding                                          <- 15 pages
+/corporate-gifts                                             <- 3 pages
+/events-weddings                                             <- 1 pages
+/hospitality                                                 <- 3 pages
+/industrial-labels                                           <- 2 pages
+/industrial-signage                                          <- 15 pages
+/portfolio                                                   <- 2 pages
+/private-events                                              <- 15 pages
+/request-a-quote                                             <- 23 pages
+/services                                                    <- 2 pages
+/solutions                                                   <- 3 pages
+
+unique image urls: 94
