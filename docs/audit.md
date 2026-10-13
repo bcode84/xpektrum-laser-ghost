@@ -163,3 +163,10 @@ Contrast of main pairs: foreground/bg 16.1:1 ✓ · muted/bg 5.4:1 ✓ · muted/
 | Redirects | `redirects.json`: CPT URLs → owning pages, broken `*Page` routes → real pages | Settings → Labs |
 
 Images: download the 94 referenced images (original files, `-scaled` resolved to the real originals where WP kept them) + logos/favicon; convert to WebP (AVIF where smaller), keep alt text; Ghost generates responsive sizes via `image_sizes` in package.json.
+
+## 11. Decisions (2026-10-13)
+
+- Scope: all 15 public pages are migrated with unchanged URLs; CPT record URLs and broken `*Page` routes get 301s.
+- Quote form: hosted form service (Formspree-compatible POST endpoint configured as a theme setting), same fields, validation and success copy.
+- Contrast: primary buttons keep `#ed7a1d` with dark text `#100d1c` (6.8:1).
+- Fonts: match the rendered look (system sans stack: Helvetica Neue / Helvetica / Arial) plus self-hosted JetBrains Mono 400/500/700.

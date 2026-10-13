@@ -1,9 +1,9 @@
 # TODO / open items
 
 ## Decisions needed from owner
-- [ ] Quote form backend (live form posts to 10Web's builder backend, which Ghost lacks).
-- [ ] Scope: migrate all 15 public pages vs. home only (see docs/audit.md §3).
-- [ ] Orange buttons: white text is 2.84:1 (fails WCAG AA). Keep the exact look, or fix contrast?
+- [x] Quote form backend → hosted form service (Formspree-compatible endpoint in a theme setting). Owner still needs to create the form and supply the endpoint URL.
+- [x] Scope → migrate all 15 public pages. CPT record URLs get 301s.
+- [x] Orange buttons → keep the orange and use dark text (#100d1c, 6.8:1).
 - [ ] Real LinkedIn / Instagram URLs (live site uses `#`).
 - [ ] Correct bed size: 600×400 mm (scenario) vs 700×500 mm (specs page).
 - [ ] Confirm image licences (xTool marketing hero, Vecteezy stock, Etsy/Amazon product photos).
