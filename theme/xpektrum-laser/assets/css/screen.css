@@ -87,10 +87,17 @@
     --shadow-4xl: 0 45px 80px -20px rgb(0 0 0 / 0.6);
 }
 
-@utility container {
+/* The live WordPress theme ships an unlayered .container rule that overrides Tailwind's container and the
+   px-* utilities on those elements (unlayered CSS beats @layer). Same here: 72rem wide, 1rem gutters. */
+.container {
+    width: 100%;
+    max-width: 72rem;
     margin-inline: auto;
-    padding-inline: 2rem;
+    padding-inline: 1rem;
 }
+
+/* The live page sits in a wrapper with a 1px frame (header starts at x=1). */
+body { border: 1px solid var(--border); }
 
 /* ---------------------------------------------------------------- fonts */
 @font-face { font-family: "JetBrains Mono"; font-style: normal; font-weight: 400; font-display: swap; src: url("../fonts/jetbrains-mono-400.woff2") format("woff2"); }
@@ -180,12 +187,12 @@
     .xp-dot:hover { background: color-mix(in oklab, var(--primary) 40%, transparent); }
     .xp-dot[aria-current="true"] { width: 2.5rem; background: var(--primary); box-shadow: 0 0 10px rgb(0 242 255 / 0.5); }
 
-    /* Projects grid: 7/5 then 5/7 columns, 16:9 wide tiles and 4:5 tall tiles. */
+    /* Projects grid: 7/5 then 5/7 columns, 16:9 wide tiles and 4:5 tall tiles (ratios apply at every width). */
     .xp-project-media { aspect-ratio: 16 / 9; }
+    .xp-project:nth-child(4n + 2) .xp-project-media, .xp-project:nth-child(4n + 3) .xp-project-media { aspect-ratio: 4 / 5; }
     @media (min-width: 48rem) {
         .xp-project:nth-child(4n + 1), .xp-project:nth-child(4n + 4) { grid-column: span 7 / span 7; }
         .xp-project:nth-child(4n + 2), .xp-project:nth-child(4n + 3) { grid-column: span 5 / span 5; }
-        .xp-project:nth-child(4n + 2) .xp-project-media, .xp-project:nth-child(4n + 3) .xp-project-media { aspect-ratio: 4 / 5; }
         .xp-project-link { display: flex; align-items: center; }
     }
     @media (hover: none) {
@@ -203,11 +210,14 @@
         .xp-dialog[open] { animation: xp-dialog-in 200ms ease-out; }
     }
 
-    /* Chart: draw the lines in when the chart scrolls into view. */
-    .xp-chart-ticks { font-family: var(--font-mono); }
+    /* Chart axis labels (Recharts geometry: y labels end at x=22px, x labels span the 40px…(100%-10px) plot). */
+    .xp-chart-y span, .xp-chart-x span { position: absolute; line-height: 1; white-space: nowrap; }
+    .xp-chart-y span { right: calc(100% - 22px); translate: 0 -50%; }
+    .xp-chart-x span { top: 293px; left: calc(40px + (100% - 50px) * var(--i) / 5); translate: -50% 0; }
+    /* Reveal the series left to right when the chart scrolls into view. */
     @media (prefers-reduced-motion: no-preference) {
-        .js .xp-chart .xp-chart-line--primary { stroke-dasharray: 1; stroke-dashoffset: 1; transition: stroke-dashoffset 1.6s ease-out 0.3s; }
-        .js .is-visible .xp-chart .xp-chart-line--primary { stroke-dashoffset: 0; }
+        .js .xp-chart .xp-chart-series { clip-path: inset(0 100% 0 0); transition: clip-path 1.6s ease-out 0.3s; }
+        .js .is-visible .xp-chart .xp-chart-series { clip-path: inset(0 0 0 0); }
     }
 
     /* Migrated page content (Lexical HTML cards from the WordPress builder). */
