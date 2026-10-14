@@ -16,3 +16,5 @@ content-export/media-library-archive/
 content-export/*.zip
 theme/*.zip
 visual-diff/
+.env.*
+!.env.example
