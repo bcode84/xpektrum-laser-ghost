@@ -183,9 +183,10 @@ body { border: 1px solid var(--border); }
     .xp-step[data-active] .xp-step-tile svg { transform: scale(1.1); }
     .xp-step[data-active] .xp-step-num { background: var(--primary); border-color: var(--primary); color: var(--primary-foreground); }
     .xp-step[data-active] .xp-step-title { color: var(--primary); }
-    .xp-dot { width: 0.75rem; height: 0.25rem; background: color-mix(in oklab, var(--primary) 20%, transparent); transition: all 300ms; }
-    .xp-dot:hover { background: color-mix(in oklab, var(--primary) 40%, transparent); }
-    .xp-dot[aria-current="true"] { width: 2.5rem; background: var(--primary); box-shadow: 0 0 10px rgb(0 242 255 / 0.5); }
+    /* 24px touch target (WCAG 2.5.8); the visible 12×4px bar is a centred background. */
+    .xp-dot { --bar: color-mix(in oklab, var(--primary) 20%, transparent); width: 1.5rem; height: 1.5rem; background: linear-gradient(var(--bar), var(--bar)) center / 0.75rem 0.25rem no-repeat; transition: all 300ms; }
+    .xp-dot:hover { --bar: color-mix(in oklab, var(--primary) 40%, transparent); }
+    .xp-dot[aria-current="true"] { --bar: var(--primary); width: 3rem; background-size: 2.5rem 0.25rem; filter: drop-shadow(0 0 5px rgb(0 242 255 / 0.5)); }
 
     /* Projects grid: 7/5 then 5/7 columns, 16:9 wide tiles and 4:5 tall tiles (ratios apply at every width). */
     .xp-project-media { aspect-ratio: 16 / 9; }

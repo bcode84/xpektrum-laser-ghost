@@ -8,10 +8,11 @@
         <h1 class="text-4xl md:text-6xl font-default font-bold tracking-tighter uppercase">{{title}}</h1>
     </header>
     {{#if feature_image}}
+        {{!-- Fixed 4:3 frame reserves the space before the image loads (no layout shift); portrait images are letterboxed, not cropped. --}}
         <figure class="container mx-auto px-4 md:px-6 max-w-5xl mb-12">
-            <picture>
+            <picture class="block aspect-[4/3] bg-card border border-border/10">
                 <source type="image/avif" sizes="(min-width: 1140px) 1024px, 100vw" srcset="{{img_url feature_image size="m" format="avif"}} 750w, {{img_url feature_image size="l" format="avif"}} 1140w, {{img_url feature_image size="xl" format="avif"}} 1600w">
-                <img class="w-full h-auto border border-border/10" sizes="(min-width: 1140px) 1024px, 100vw"
+                <img class="w-full h-full object-contain" width="1365" height="1024" sizes="(min-width: 1140px) 1024px, 100vw"
                     srcset="{{img_url feature_image size="m"}} 750w, {{img_url feature_image size="l"}} 1140w, {{img_url feature_image size="xl"}} 1600w"
                     src="{{img_url feature_image size="l"}}" alt="{{#if feature_image_alt}}{{feature_image_alt}}{{else}}{{title}}{{/if}}" fetchpriority="high">
             </picture>

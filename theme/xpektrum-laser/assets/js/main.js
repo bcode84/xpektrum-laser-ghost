@@ -12,6 +12,9 @@
     var $ = function (sel, root) { return (root || document).querySelector(sel); };
     var $$ = function (sel, root) { return Array.prototype.slice.call((root || document).querySelectorAll(sel)); };
 
+    // tel: links come from the display-formatted phone setting; keep only + and digits (RFC 3966).
+    $$('a[href^="tel:"]').forEach(function (a) { a.href = 'tel:' + a.getAttribute('href').slice(4).replace(/[^+\d]/g, ''); });
+
     /* ------------------------------------------------------------ header */
     var header = $('.xp-header');
     if (header) {
