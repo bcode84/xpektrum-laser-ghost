@@ -2,9 +2,12 @@
 # Bootstrap the Xpektrum Ghost site: start the stack, create the owner, activate the theme, import content
 # and images, upload routes/redirects, apply settings and print a verification report.
 # Idempotent: safe to re-run. Content is imported only once unless FORCE_IMPORT=1 (which wipes Ghost content first).
+# Routes, redirects, navigation/site settings and theme settings are applied together with an import only, so a
+# re-run never reverts edits made in Ghost Admin. SYNC_SETTINGS=1 re-applies them from content-export/ and .env.
 #
 # Usage: scripts/bootstrap.sh            (from ghost-migration/, or `make import` from the repo root)
 #        FORCE_IMPORT=1 scripts/bootstrap.sh
+#        SYNC_SETTINGS=1 scripts/bootstrap.sh
 #        ENV_FILE=other.env scripts/bootstrap.sh   (e.g. a throwaway stack: COMPOSE_PROJECT_NAME + GHOST_PORT in that file)
 set -euo pipefail
 
@@ -80,9 +83,11 @@ echo "$out" | grep -q '"active":true' && c_ok "xpektrum-laser active" || { c_fai
 # ---------------------------------------------------------------- 5. content import
 c_info "Content"
 has_home() { [ "$(api GET '/pages/slug/home/?fields=id' -o /dev/null -w '%{http_code}')" = "200" ]; }
+SYNC="${SYNC_SETTINGS:-0}"
 if has_home && [ "${FORCE_IMPORT:-0}" != "1" ]; then
     c_ok "already imported (FORCE_IMPORT=1 to wipe and re-import)"
 else
+    SYNC=1
     # Remove Ghost's fixture content ("Coming soon", "About this site" – which would take the /about/ slug),
     # or the previous import when FORCE_IMPORT=1. Staff, settings and themes are kept.
     code=$(api DELETE /db/ -o /dev/null -w '%{http_code}')
@@ -99,28 +104,33 @@ else
     has_home && c_ok "content present" || { c_fail "home page not found after import"; exit 1; }
 fi
 
-# ---------------------------------------------------------------- 6. routes & redirects
-c_info "Routes and redirects"
-code=$(api POST /settings/routes/yaml/ -F "routes=@$EXPORT/routes.yaml;type=application/x-yaml" -o /dev/null -w '%{http_code}')
-[ "$code" = "200" ] && c_ok "routes.yaml uploaded" || { c_fail "routes upload HTTP $code"; exit 1; }
-code=$(api POST /redirects/upload/ -F "redirects=@$EXPORT/redirects.json;type=application/json" -o /dev/null -w '%{http_code}')
-[ "$code" = "200" ] && c_ok "redirects.json uploaded" || { c_fail "redirects upload HTTP $code"; exit 1; }
+if [ "$SYNC" = "1" ]; then
+    # ---------------------------------------------------------------- 6. routes & redirects
+    c_info "Routes and redirects"
+    code=$(api POST /settings/routes/yaml/ -F "routes=@$EXPORT/routes.yaml;type=application/x-yaml" -o /dev/null -w '%{http_code}')
+    [ "$code" = "200" ] && c_ok "routes.yaml uploaded" || { c_fail "routes upload HTTP $code"; exit 1; }
+    code=$(api POST /redirects/upload/ -F "redirects=@$EXPORT/redirects.json;type=application/json" -o /dev/null -w '%{http_code}')
+    [ "$code" = "200" ] && c_ok "redirects.json uploaded" || { c_fail "redirects upload HTTP $code"; exit 1; }
 
-# ---------------------------------------------------------------- 7. settings
-c_info "Settings"
-settings=$(jq --arg url "$GHOST_URL" '{settings: [.db[0].data.settings[] | .value |= (if type == "string" then gsub("__GHOST_URL__"; "") else . end)]}' "$EXPORT/ghost-import.json")
-out=$(api_json PUT /settings/ "$settings")
-echo "$out" | grep -q '"settings"' && c_ok "site settings + navigation applied" || { c_fail "settings failed: $(echo "$out" | head -c 400)"; exit 1; }
+    # ---------------------------------------------------------------- 7. settings
+    c_info "Settings"
+    settings=$(jq --arg url "$GHOST_URL" '{settings: [.db[0].data.settings[] | .value |= (if type == "string" then gsub("__GHOST_URL__"; "") else . end)]}' "$EXPORT/ghost-import.json")
+    out=$(api_json PUT /settings/ "$settings")
+    echo "$out" | grep -q '"settings"' && c_ok "site settings + navigation applied" || { c_fail "settings failed: $(echo "$out" | head -c 400)"; exit 1; }
 
-current=$(api GET /custom_theme_settings/)
-custom=$(echo "$current" | jq --arg q "${QUOTE_FORM_ENDPOINT:-}" --arg li "${LINKEDIN_URL:-}" --arg ig "${INSTAGRAM_URL:-}" '
-    {custom_theme_settings: [.custom_theme_settings[] | {key, value}
-        | if .key == "quote_form_endpoint" and $q != "" then .value = $q
-          elif .key == "linkedin_url" and $li != "" then .value = $li
-          elif .key == "instagram_url" and $ig != "" then .value = $ig
-          else . end]}')
-out=$(api_json PUT /custom_theme_settings/ "$custom")
-echo "$out" | grep -q '"custom_theme_settings"' && c_ok "theme settings applied" || { c_fail "theme settings failed: $(echo "$out" | head -c 400)"; exit 1; }
+    current=$(api GET /custom_theme_settings/)
+    custom=$(echo "$current" | jq --arg q "${QUOTE_FORM_ENDPOINT:-}" --arg li "${LINKEDIN_URL:-}" --arg ig "${INSTAGRAM_URL:-}" '
+        {custom_theme_settings: [.custom_theme_settings[] | {key, value}
+            | if .key == "quote_form_endpoint" and $q != "" then .value = $q
+              elif .key == "linkedin_url" and $li != "" then .value = $li
+              elif .key == "instagram_url" and $ig != "" then .value = $ig
+              else . end]}')
+    out=$(api_json PUT /custom_theme_settings/ "$custom")
+    echo "$out" | grep -q '"custom_theme_settings"' && c_ok "theme settings applied" || { c_fail "theme settings failed: $(echo "$out" | head -c 400)"; exit 1; }
+else
+    c_info "Routes, redirects and settings"
+    c_ok "kept as they are in Ghost Admin (SYNC_SETTINGS=1 to re-apply from content-export/ and .env)"
+fi
 
 # ---------------------------------------------------------------- 8. verification report
 c_info "Verification ($GHOST_URL)"
@@ -167,4 +177,4 @@ echo
 echo "  Ghost $version · theme xpektrum-laser · posts: $counts (4 projects + 3 stats + 5 workflow steps) · pages: $pcounts"
 echo "  Admin: $GHOST_URL/ghost/  ($GHOST_ADMIN_EMAIL)"
 rm -f "$BODY"
-[ "$fails" -eq 0 ] && c_ok "all checks passed" || { c_fail "$fails check(s) failed"; exit 1; }
+[ "$fails" -eq 0 ] && c_ok "all checks passed" || { c_fail "$fails check(s) failed (if a previous run stopped before the settings step: SYNC_SETTINGS=1)"; exit 1; }

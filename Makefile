@@ -10,10 +10,10 @@ BACKUPS  := $(STACK)/backups
 STAMP    := $(shell date +%Y%m%d-%H%M%S)
 
 .DEFAULT_GOAL := help
-.PHONY: help env up import reimport down reset backup restore logs ps theme check
+.PHONY: help env up import reimport sync-settings down reset backup restore logs ps theme check
 
 help: ## List targets
-	@grep -hE '^[a-z-]+:.*## ' $(MAKEFILE_LIST) | awk -F':.*## ' '{printf "  \033[36m%-10s\033[0m %s\n", $$1, $$2}'
+	@grep -hE '^[a-z-]+:.*## ' $(MAKEFILE_LIST) | awk -F':.*## ' '{printf "  \033[36m%-14s\033[0m %s\n", $$1, $$2}'
 
 env: ## Create ghost-migration/.env from .env.example (edit the passwords before `make up`)
 	@cd $(STACK) && { test -f $(ENV_FILE) && echo "$(ENV_FILE) exists – not touched" || \
@@ -23,11 +23,14 @@ up: ## Start MySQL + Ghost and wait until both are healthy
 	@cd $(STACK) && test -f $(ENV_FILE) || { echo "Missing $(ENV_FILE) in $(STACK)/ – run 'make env' first"; exit 1; }
 	$(COMPOSE) up -d --wait
 
-import: ## Owner account, theme, content, routes, redirects, settings + checks (idempotent)
+import: ## First run: owner, theme, content, routes, redirects, settings. Re-runs: checks only (idempotent)
 	cd $(STACK) && ENV_FILE=$(ENV_FILE) scripts/bootstrap.sh
 
-reimport: ## Wipe posts/pages/tags and import again (keeps staff, settings, images on disk)
+reimport: ## Wipe posts/pages/tags, import again and re-apply routes/redirects/settings (keeps staff)
 	cd $(STACK) && ENV_FILE=$(ENV_FILE) FORCE_IMPORT=1 scripts/bootstrap.sh
+
+sync-settings: ## Re-apply routes, redirects, navigation/site settings and theme settings from content-export/ and .env (overwrites Admin edits)
+	cd $(STACK) && ENV_FILE=$(ENV_FILE) SYNC_SETTINGS=1 scripts/bootstrap.sh
 
 down: ## Stop the stack (data kept)
 	$(COMPOSE) down
