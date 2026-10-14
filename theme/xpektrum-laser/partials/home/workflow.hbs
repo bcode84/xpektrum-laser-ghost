@@ -1,0 +1,32 @@
+{{!-- Workflow steps = posts tagged #workflow (oldest first). Scroll-snap carousel; main.js adds prev/next/dots and the active state. --}}
+<section id="our-precision-workflow" class="w-full py-20 md:py-32 bg-background text-foreground relative overflow-hidden">
+    <div class="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none z-0" aria-hidden="true">
+        <div class="absolute top-[-10%] left-[-5%] w-96 h-96 bg-primary/10 rounded-none blur-3xl"></div>
+        <div class="absolute bottom-[-10%] right-[-5%] w-96 h-96 bg-primary/5 rounded-none blur-3xl"></div>
+    </div>
+    <div class="container mx-auto px-4 md:px-6 relative z-10">
+        <div class="xp-reveal text-center max-w-3xl mx-auto mb-16" data-reveal="up">
+            <h2 class="text-3xl md:text-5xl font-default font-bold text-primary mb-6 tracking-tighter uppercase">Our Precision Workflow</h2>
+            <p class="text-lg text-muted-foreground font-default">A high-performance industrial pipeline engineered for speed, accuracy, and commercial-grade results.</p>
+        </div>
+        <div class="relative max-w-6xl mx-auto">
+            <div class="xp-carousel relative w-full" role="region" aria-roledescription="carousel" aria-label="Workflow steps">
+                <div class="xp-carousel-viewport overflow-x-auto">
+                    <ol class="xp-carousel-track flex -ml-4 relative py-10" role="list">
+                        <li class="absolute top-[88px] left-0 w-full h-0.5 border-t border-dashed border-primary/30 hidden md:block z-0" aria-hidden="true"></li>
+                        {{#get "posts" filter="tag:hash-workflow" order="published_at asc" limit="10"}}
+                            {{#foreach posts}}
+                                {{> workflow-step}}
+                            {{/foreach}}
+                        {{/get}}
+                    </ol>
+                </div>
+                <div class="xp-carousel-controls flex items-center justify-center gap-4 mt-8" hidden>
+                    <button type="button" class="xp-carousel-prev inline-flex items-center justify-center size-8 border bg-background border-primary/20 rounded-none hover:bg-primary hover:text-primary-foreground transition-colors disabled:opacity-50 disabled:pointer-events-none">{{> icons/arrow-left class="size-4"}}<span class="sr-only">Previous step</span></button>
+                    <div class="xp-carousel-dots flex gap-2"></div>
+                    <button type="button" class="xp-carousel-next inline-flex items-center justify-center size-8 border bg-background border-primary/20 rounded-none hover:bg-primary hover:text-primary-foreground transition-colors disabled:opacity-50 disabled:pointer-events-none">{{> icons/arrow-right class="size-4"}}<span class="sr-only">Next step</span></button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

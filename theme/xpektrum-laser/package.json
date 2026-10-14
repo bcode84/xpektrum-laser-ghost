@@ -1,0 +1,145 @@
+{
+  "name": "xpektrum-laser",
+  "description": "Industrial/brutalist Ghost theme for Xpektrum Agency (laser.xpektrum.com).",
+  "demo": "https://laser.xpektrum.com",
+  "version": "1.0.0",
+  "engines": {
+    "ghost": ">=6.0.0"
+  },
+  "license": "UNLICENSED",
+  "private": true,
+  "author": {
+    "name": "Xpektrum Agency",
+    "email": "info@xpektrum.com",
+    "url": "https://laser.xpektrum.com"
+  },
+  "keywords": [
+    "ghost",
+    "theme",
+    "ghost-theme"
+  ],
+  "config": {
+    "posts_per_page": 12,
+    "image_sizes": {
+      "xs": {
+        "width": 160
+      },
+      "s": {
+        "width": 400
+      },
+      "m": {
+        "width": 750
+      },
+      "l": {
+        "width": 1140
+      },
+      "xl": {
+        "width": 1600
+      },
+      "xxl": {
+        "width": 2000
+      }
+    },
+    "card_assets": true,
+    "custom": {
+      "phone": {
+        "type": "text",
+        "default": "+1 (438) 898-7540"
+      },
+      "email": {
+        "type": "text",
+        "default": "info@xpektrum.com"
+      },
+      "address": {
+        "type": "text",
+        "default": "Montreal, QC, Canada"
+      },
+      "linkedin_url": {
+        "type": "text",
+        "default": "",
+        "description": "Full URL. Leave empty to hide the icon."
+      },
+      "instagram_url": {
+        "type": "text",
+        "default": "",
+        "description": "Full URL. Leave empty to hide the icon."
+      },
+      "quote_form_endpoint": {
+        "type": "text",
+        "default": "",
+        "description": "Formspree-compatible POST URL. Empty: the form opens an email instead."
+      },
+      "quote_success_message": {
+        "type": "text",
+        "default": "Transmission successful. Our production team is reviewing your specifications and will contact you shortly."
+      },
+      "status_text": {
+        "type": "text",
+        "default": "Status: Studio Online",
+        "description": "Footer status pill. Empty hides it."
+      },
+      "hero_eyebrow": {
+        "type": "text",
+        "default": "80W CO2 | 0.01mm Accuracy",
+        "group": "homepage"
+      },
+      "hero_title": {
+        "type": "text",
+        "default": "Industrial Laser",
+        "group": "homepage"
+      },
+      "hero_title_accent": {
+        "type": "text",
+        "default": "Precision",
+        "description": "Orange 2nd line. Hero text/image = Home page excerpt and feature image.",
+        "group": "homepage"
+      },
+      "job_card_batch": {
+        "type": "text",
+        "default": "Batch ID: XP-9920",
+        "group": "homepage"
+      },
+      "job_card_units": {
+        "type": "text",
+        "default": "500 UNITS",
+        "group": "homepage"
+      },
+      "job_card_qc": {
+        "type": "text",
+        "default": "QC Passed 100%",
+        "group": "homepage"
+      },
+      "edge_eyebrow": {
+        "type": "text",
+        "default": "Montreal Local Studio",
+        "group": "homepage"
+      },
+      "edge_title": {
+        "type": "text",
+        "default": "The Xpektrum",
+        "group": "homepage"
+      },
+      "edge_title_accent": {
+        "type": "text",
+        "default": "Industrial Edge",
+        "group": "homepage"
+      },
+      "edge_text": {
+        "type": "text",
+        "default": "We operate the xTool P3 80W CO2 laser system, delivering industrial-grade precision that hobbyist makers can't match. From technical labels to high-volume corporate gifts, we provide the speed and accuracy your business demands.",
+        "group": "homepage"
+      },
+      "spec_phrases": {
+        "type": "text",
+        "default": "XTOOL P3 80W CO2 LASER SYSTEM MONTREAL LOCAL STUDIO PRODUCTION PRECISION BRUTALISM DESIGN SPECS INDUSTRIAL GRADE ENGRAVING TECH B2B COMMERCIAL PARTNER RELIABLE 0.01MM ACCURACY TOLERANCE LEVEL FAST TURNAROUND PROTOTYPING 24H XPEKTRUM AGENCY MONTREAL QC CA",
+        "description": "Background texture text behind the stats section.",
+        "group": "homepage"
+      },
+      "cta_title": {
+        "type": "text",
+        "default": "Ready for Production?",
+        "group": "homepage"
+      }
+    }
+  }
+}

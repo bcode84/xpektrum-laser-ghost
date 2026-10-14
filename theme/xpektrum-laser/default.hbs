@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="{{@site.locale}}" class="dark">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{{meta_title}}</title>
+    <meta name="color-scheme" content="dark">
+    <meta name="theme-color" content="#100d1c">
+    <script>document.documentElement.classList.add('js')</script>
+
+    <link rel="preload" href="{{asset "fonts/jetbrains-mono-400.woff2"}}" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="{{asset "built/screen.css"}}" as="style">
+    <link rel="stylesheet" href="{{asset "built/screen.css"}}">
+
+    {{ghost_head}}
+    {{> json-ld}}
+</head>
+<body class="{{body_class}} bg-background text-foreground font-default antialiased">
+    <a class="xp-skip" href="#main">Skip to content</a>
+
+    {{> header}}
+
+    <main id="main">
+        {{{body}}}
+    </main>
+
+    {{> footer}}
+
+    <script src="{{asset "built/main.js"}}" defer></script>
+    {{ghost_foot}}
+</body>
+</html>

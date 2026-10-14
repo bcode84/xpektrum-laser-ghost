@@ -1,0 +1,12 @@
+{{!< default}}
+<section class="bg-background text-foreground min-h-[70vh] flex items-center py-24 px-4">
+    <div class="max-w-3xl mx-auto text-center">
+        <p class="font-mono text-sm uppercase tracking-widest text-primary mb-6">Error {{statusCode}}</p>
+        <h1 class="text-5xl md:text-8xl font-default font-bold tracking-tighter uppercase mb-8">{{#match statusCode 404}}Off the bed{{else}}Laser fault{{/match}}</h1>
+        <p class="text-lg text-muted-foreground mb-10">{{message}}</p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+            <a href="{{@site.url}}" class="xp-btn inline-flex items-center justify-center h-14 px-8 rounded-none bg-primary text-primary-foreground font-default font-bold uppercase tracking-wider hover:bg-primary/90">Back to home</a>
+            <a href="/request-a-quote/" class="inline-flex items-center justify-center h-14 px-8 rounded-none border border-foreground/20 text-foreground font-default uppercase tracking-wider hover:bg-foreground/5">Request a Quote</a>
+        </div>
+    </div>
+</section>

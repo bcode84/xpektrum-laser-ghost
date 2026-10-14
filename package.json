@@ -1,0 +1,32 @@
+{
+  "name": "xpektrum-migration-tools",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build:css": "tailwindcss -i theme/xpektrum-laser/assets/css/screen.css -o theme/xpektrum-laser/assets/built/screen.css --minify",
+    "build:js": "esbuild theme/xpektrum-laser/assets/js/main.js --minify --target=es2019 --outfile=theme/xpektrum-laser/assets/built/main.js",
+    "build": "npm run build:css && npm run build:js",
+    "watch:css": "tailwindcss -i theme/xpektrum-laser/assets/css/screen.css -o theme/xpektrum-laser/assets/built/screen.css --watch",
+    "gscan": "gscan theme/xpektrum-laser --verbose",
+    "zip": "npm run build && cd theme && rm -f xpektrum-laser.zip && zip -qr xpektrum-laser.zip xpektrum-laser -x '*.DS_Store'",
+    "content": "node tools/build-content.mjs . && tools/package-import.sh ."
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "devDependencies": {
+    "@tailwindcss/cli": "^4.3.3",
+    "cheerio": "^1.2.0",
+    "esbuild": "^0.28.2",
+    "fontkit": "^2.0.4",
+    "gscan": "^6.6.1",
+    "playwright": "^1.64.0",
+    "sharp": "^0.35.5",
+    "subset-font": "^2.9.0",
+    "tailwindcss": "^4.3.3",
+    "tw-animate-css": "^1.4.0"
+  },
+  "private": true
+}

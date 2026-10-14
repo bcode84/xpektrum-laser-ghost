@@ -1,0 +1,47 @@
+{{!-- Sticky header. Main.js toggles .is-scrolled after 20px. "Services" nav item opens the #sector pages dropdown. --}}
+<div id="header" class="xp-header sticky top-0 z-50 w-full transition-all duration-500 bg-background text-foreground border-b border-transparent">
+    <header class="container mx-auto px-4 lg:px-8 h-20 flex items-center justify-between">
+        <a href="{{@site.url}}" class="flex-shrink-0 relative z-10">
+            {{#if @site.logo}}
+                <img class="h-7 w-auto object-contain brightness-0 invert" src="{{img_url @site.logo size="s"}}" alt="{{@site.title}}" width="216" height="28">
+            {{else}}
+                <span class="font-default font-bold uppercase tracking-widest">{{@site.title}}</span>
+            {{/if}}
+        </a>
+
+        <div class="flex-1 flex justify-center">
+            <nav aria-label="Main" class="relative max-w-max flex-1 items-center justify-center hidden md:flex">
+                {{navigation}}
+            </nav>
+        </div>
+
+        <div class="flex items-center gap-4 justify-end">
+            <div class="relative hidden md:block">
+                <a href="/request-a-quote/" class="xp-btn inline-flex items-center justify-center whitespace-nowrap h-9 py-2 px-8 rounded-lg bg-primary text-primary-foreground font-default font-bold uppercase tracking-widest text-sm hover:bg-primary/90 hover:shadow-[0_0_25px_rgba(0,242,255,0.6)] transition-all duration-300">Request a Quote</a>
+            </div>
+            <button type="button" class="xp-menu-toggle md:hidden inline-flex items-center justify-center size-10 text-foreground" aria-expanded="false" aria-controls="xp-mobile-menu" aria-label="Open menu">
+                {{> icons/menu class="size-6 xp-icon-open"}}
+                {{> icons/x class="size-6 xp-icon-close"}}
+            </button>
+        </div>
+    </header>
+
+    {{!-- Mobile menu --}}
+    <div id="xp-mobile-menu" class="xp-mobile-menu md:hidden border-t border-border bg-background" hidden>
+        <nav aria-label="Mobile" class="container mx-auto px-4 py-6 flex flex-col gap-1">
+            {{#foreach @site.navigation}}
+                {{#match label "Services"}}
+                    <span class="py-2 font-mono text-xs uppercase tracking-widest text-muted-foreground">{{label}}</span>
+                    {{#get "pages" filter="tag:hash-sector" order="published_at asc" limit="20"}}
+                        {{#foreach pages}}
+                            <a href="{{url}}" class="py-2 pl-4 text-sm font-default uppercase tracking-widest text-foreground hover:text-primary">{{title}}</a>
+                        {{/foreach}}
+                    {{/get}}
+                {{else}}
+                    <a href="{{url absolute="true"}}" class="py-2 text-sm font-default font-bold uppercase tracking-widest text-foreground hover:text-primary{{#if current}} text-primary{{/if}}"{{#if current}} aria-current="page"{{/if}}>{{label}}</a>
+                {{/match}}
+            {{/foreach}}
+            <a href="/request-a-quote/" class="mt-4 inline-flex items-center justify-center h-12 rounded-none bg-primary text-primary-foreground font-default font-bold uppercase tracking-widest text-sm">Request a Quote</a>
+        </nav>
+    </div>
+</div>

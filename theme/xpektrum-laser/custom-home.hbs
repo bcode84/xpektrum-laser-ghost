@@ -1,0 +1,14 @@
+{{!< default}}
+{{!--
+    Home page (routes.yaml: "/" → page.home, template custom-home).
+    Hero text = page custom excerpt, hero image = page feature image, other copy = Design → Homepage settings.
+    Stats, workflow steps, sectors and projects come from internal-tagged posts/pages.
+--}}
+{{#page}}
+    {{> home/hero}}
+{{/page}}
+{{> home/edge}}
+{{> home/sectors}}
+{{> home/workflow}}
+{{> home/projects}}
+{{> home/cta}}

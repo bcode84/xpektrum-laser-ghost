@@ -1,0 +1,20 @@
+{{!< default}}
+{{!-- Sector: full-width content plus links to the other sectors and the quote CTA. For pages tagged #sector. --}}
+{{#page}}
+<article class="{{post_class}} xp-full-width">
+    {{content}}
+</article>
+
+<nav class="border-t border-border bg-background py-16" aria-labelledby="xp-other-sectors">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <h2 id="xp-other-sectors" class="font-mono text-xs uppercase tracking-widest text-muted-foreground mb-6">Other sectors</h2>
+        <ul class="flex flex-wrap gap-3">
+            {{#get "pages" filter="tag:hash-sector+id:-{{id}}" order="published_at asc" limit="20"}}
+                {{#foreach pages}}
+                    <li><a href="{{url}}" class="inline-flex items-center gap-2 px-4 py-2 border border-border text-xs font-default font-bold uppercase tracking-widest text-foreground hover:border-primary hover:text-primary transition-colors">{{title}}</a></li>
+                {{/foreach}}
+            {{/get}}
+        </ul>
+    </div>
+</nav>
+{{/page}}

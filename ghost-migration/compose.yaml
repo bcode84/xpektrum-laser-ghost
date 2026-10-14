@@ -1,0 +1,92 @@
+# Ghost 6 + MySQL 8.0 for laser.xpektrum.com.
+#   Local:       cp .env.example .env && make up && make import
+#   Production:  set GHOST_URL/DOMAIN in .env, then `docker compose --profile production up -d`
+# Images: ghost:6-alpine (Ghost 6.x, checked on Docker Hub 2026-10-13: 6.69.0), mysql:8.0 (never :latest).
+name: xpektrum
+
+services:
+  db:
+    image: mysql:8.0
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:?set in .env}
+      MYSQL_DATABASE: ${MYSQL_DATABASE:-ghost}
+      MYSQL_USER: ${MYSQL_USER:-ghost}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD:?set in .env}
+    command: ["--character-set-server=utf8mb4", "--collation-server=utf8mb4_0900_ai_ci"]
+    volumes:
+      - mysql-data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h 127.0.0.1 -u root -p\"$$MYSQL_ROOT_PASSWORD\" --silent"]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+      start_period: 40s
+
+  ghost:
+    image: ghost:6-alpine
+    restart: unless-stopped
+    # Run as the image's unprivileged "node" user. The entrypoint then skips its recursive chown of
+    # content/, which would fail on the read-only theme bind mount below.
+    user: node
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      NODE_ENV: production
+      url: ${GHOST_URL:-http://localhost:2368}
+      database__client: mysql
+      database__connection__host: db
+      database__connection__port: 3306
+      database__connection__user: ${MYSQL_USER:-ghost}
+      database__connection__password: ${MYSQL_PASSWORD}
+      database__connection__database: ${MYSQL_DATABASE:-ghost}
+      # Mail (staff invites, password resets). Placeholder values in .env.example.
+      mail__transport: SMTP
+      mail__from: ${MAIL_FROM:-noreply@xpektrum.com}
+      mail__options__host: ${SMTP_HOST:-smtp.example.com}
+      mail__options__port: ${SMTP_PORT:-587}
+      mail__options__secure: ${SMTP_SECURE:-false}
+      mail__options__auth__user: ${SMTP_USER:-}
+      mail__options__auth__pass: ${SMTP_PASS:-}
+      # New-device email verification for staff logins. Off until SMTP works (bootstrap needs a session);
+      # turn it on in .env once mail is configured.
+      security__staffDeviceVerification: ${STAFF_DEVICE_VERIFICATION:-false}
+      # No members/newsletters on this site.
+      privacy__useTinfoil: ${GHOST_TINFOIL:-false}
+    volumes:
+      - ghost-content:/var/lib/ghost/content
+      - ../theme/xpektrum-laser:/var/lib/ghost/content/themes/xpektrum-laser:ro
+    ports:
+      - "${GHOST_BIND:-127.0.0.1}:${GHOST_PORT:-2368}:2368"
+    healthcheck:
+      test: ["CMD-SHELL", "wget -q -O /dev/null --header='X-Forwarded-Proto: https' http://127.0.0.1:2368/ghost/api/admin/site/ || exit 1"]
+      interval: 15s
+      timeout: 5s
+      retries: 20
+      start_period: 60s
+
+  caddy:
+    image: caddy:2-alpine
+    profiles: ["production"]
+    restart: unless-stopped
+    depends_on:
+      ghost:
+        condition: service_healthy
+    environment:
+      DOMAIN: ${DOMAIN:?set DOMAIN in .env for the production profile}
+      ACME_EMAIL: ${ACME_EMAIL:-}
+    ports:
+      - "80:80"
+      - "443:443"
+      - "443:443/udp"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy-data:/data
+      - caddy-config:/config
+
+volumes:
+  mysql-data:
+  ghost-content:
+  caddy-data:
+  caddy-config:

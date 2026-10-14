@@ -132,9 +132,24 @@ function cleanSections($, sections, slug) {
       return img ? `url("${img.url}")` : m;
     }));
   });
+  // Tailwind arbitrary bg-[url(...)] classes would hard-code the old host: move them to inline styles.
+  $wrap.find('[class*="bg-[url("]').each((_, el) => {
+    const $el = $(el);
+    const cls = $el.attr('class');
+    const m = cls.match(/bg-\[url\(['"]?([^'")]+)['"]?\)\]/);
+    const img = m && mapImage(m[1]);
+    if (!img) return;
+    $el.attr('class', cls.replace(m[0], '').replace(/\s+/g, ' ').trim());
+    $el.attr('style', `${$el.attr('style') ? $el.attr('style') + '; ' : ''}background-image: url("${img.url}")`);
+  });
   // Links.
   $wrap.find('a[href]').each((_, el) => $(el).attr('href', mapHref($(el).attr('href'))));
   if (slug === 'request-a-quote') prepareQuoteForm($wrap, $);
+  // Exactly one <h1> per page: promote the first <h2> where the builder used none.
+  if (!$wrap.find('h1').length) {
+    const h2 = $wrap.find('h2').first();
+    if (h2.length) h2.replaceWith(`<h1${h2.attr('class') ? ` class="${h2.attr('class')}"` : ''}${h2.attr('id') ? ` id="${h2.attr('id')}"` : ''}>${h2.html()}</h1>`);
+  }
   // React useId values («r0») → plain ids, consistently in id/for/aria-* references.
   $wrap.find('[id], [for], [aria-controls], [aria-labelledby], [aria-describedby]').each((_, el) => {
     for (const a of ['id', 'for', 'aria-controls', 'aria-labelledby', 'aria-describedby']) {
@@ -164,9 +179,13 @@ function mainSections($) {
 
 // ---------------------------------------------------------------- Lexical helpers
 const lexicalHtml = (html) => JSON.stringify({ root: { children: [{ type: 'html', version: 1, html }], direction: null, format: '', indent: 0, type: 'root', version: 1 } });
+// Lexical needs at least one root child: an empty document is one empty paragraph (Ghost's blankDocument).
 const lexicalText = (paras) => JSON.stringify({
   root: {
-    children: paras.map((t) => ({ children: [{ detail: 0, format: 0, mode: 'normal', style: '', text: t, type: 'extended-text', version: 1 }], direction: 'ltr', format: '', indent: 0, type: 'paragraph', version: 1 })),
+    children: (paras.length ? paras : [null]).map((t) => ({
+      children: t === null ? [] : [{ detail: 0, format: 0, mode: 'normal', style: '', text: t, type: 'extended-text', version: 1 }],
+      direction: t === null ? null : 'ltr', format: '', indent: 0, type: 'paragraph', version: 1,
+    })),
     direction: 'ltr', format: '', indent: 0, type: 'root', version: 1,
   },
 });
@@ -196,9 +215,18 @@ const META = {
   portfolio: { description: 'Portfolio of Xpektrum laser engraving and cutting projects across industrial, corporate and event work.' },
 };
 
+// Home hero: excerpt = subtitle, feature image = hero image (theme settings hold the title).
+const HOME_HERO = {
+  excerpt: 'High-speed B2B engraving and cutting solutions for Montreal’s leading agencies and industries. Fast turnaround, technical excellence, and commercial-grade reliability.',
+  image: '2026/05/xtool-p3.jpg',
+  alt: 'High-speed industrial laser cutting metal with sparks',
+};
+
 // Templates per page (theme provides custom-*.hbs).
 const TEMPLATE = { home: 'custom-home', 'request-a-quote': 'custom-quote' };
-const SECTOR_SLUGS = ['industrial-labels', 'industrial-signage', 'commercial-signage', 'corporate-gifts', 'corporate-branding', 'hospitality', 'private-events', 'events-weddings'];
+// Services dropdown order (published_at asc). Grouped industrial → hospitality/events → corporate so the
+// three featured cards on the home page keep the live order with the same sort key.
+const SECTOR_SLUGS = ['industrial-labels', 'industrial-signage', 'commercial-signage', 'hospitality', 'private-events', 'events-weddings', 'corporate-gifts', 'corporate-branding'];
 
 // Home sector cards (featured sectors, in order) – see audit §4.
 const HOME_SECTORS = {
@@ -247,9 +275,9 @@ for (const wp of wpPages) {
   posts.push({
     id, uuid: crypto.randomUUID(), title, slug, type: 'page', status: 'published', visibility: 'public',
     lexical, mobiledoc: null, html: null,
-    custom_excerpt: featured ? featured.card_text : null,
-    custom_template: TEMPLATE[slug] || (SECTOR_SLUGS.includes(slug) ? 'custom-sector' : null),
-    feature_image: null, featured: false,
+    custom_excerpt: featured ? featured.card_text : (slug === 'home' ? HOME_HERO.excerpt : null),
+    custom_template: TEMPLATE[slug] || (SECTOR_SLUGS.includes(slug) ? 'custom-sector' : 'custom-full-width'),
+    feature_image: slug === 'home' ? imageMap.get(HOME_HERO.image)?.url : null, featured: false,
     created_at: wp.date_gmt + '.000Z', updated_at: wp.modified_gmt + '.000Z', published_at: wp.date_gmt + '.000Z',
     author_id: '1',
   });
@@ -258,18 +286,19 @@ for (const wp of wpPages) {
     meta_title: featured ? null : (meta.title || null),
     meta_description: meta.description || null,
     og_title: featured ? featured.card_title : null,
+    feature_image_alt: slug === 'home' ? HOME_HERO.alt : null,
   });
   if (SECTOR_SLUGS.includes(slug)) addTag(id, '#sector');
   if (featured) addTag(id, '#sector-featured', 1);
   if (slug === 'home') addTag(id, '#home');
-  report.push({ slug, title, bytes: body.length, template: TEMPLATE[slug] || (SECTOR_SLUGS.includes(slug) ? 'custom-sector' : 'page') });
+  report.push({ slug, title, bytes: body.length, template: TEMPLATE[slug] || (SECTOR_SLUGS.includes(slug) ? 'custom-sector' : 'custom-full-width') });
 }
 
-// Sector card order: Ghost sorts {{#get}} by published_at, so stagger the featured ones.
-for (const [slug, s] of Object.entries(HOME_SECTORS)) {
+// Sector order: the theme lists #sector pages by published_at asc, so stagger them in SECTOR_SLUGS order.
+SECTOR_SLUGS.forEach((slug, i) => {
   const p = posts.find((x) => x.slug === slug);
-  p.published_at = new Date(Date.UTC(2026, 3, 1, 12, 0, 10 - s.order)).toISOString();
-}
+  p.published_at = new Date(Date.UTC(2026, 3, 1, 12, i, 0)).toISOString();
+});
 
 // ---------------------------------------------------------------- projects (from the Home bundle, audit §4)
 const PROJECTS = [
@@ -298,6 +327,40 @@ PROJECTS.forEach((p, i) => {
   postsMeta.push({ id: oid('meta-' + p.slug), post_id: id, feature_image_alt: p.title, meta_description: `${p.body.slice(0, 150)}` });
   addTag(id, 'project');
 });
+
+// ---------------------------------------------------------------- data posts for the home page
+// Stats: title = label, body = value, custom excerpt = description.
+const STATS = [
+  ['80W', 'Industrial Power', 'High-wattage CO2 laser for deep engraving and clean industrial cuts.'],
+  ['24H', 'Prototype Turnaround', 'Rapid local production in Montreal for urgent commercial projects.'],
+  ['0.01mm', 'Precision', 'Micro-level accuracy for complex technical labels and branding.'],
+];
+// Workflow steps: title, custom excerpt = description. Number and icon come from the position.
+const STEPS = [
+  ['File Submission', 'Upload your vector or CAD files. Our engineers review specifications for optimal laser pathing.'],
+  ['Material Selection', 'Choose from our industrial-grade acrylics, metals, or woods curated for high-end branding.'],
+  ['Laser Calibration', 'Precision 80W CO₂ laser setup ensures micron-level accuracy for every engraving detail.'],
+  ['Quality Control', 'Rigorous inspection of edge clarity and engraving depth to meet B2B standards.'],
+  ['Rapid Delivery', 'Fast-turnaround logistics ensuring your commercial project arrives on schedule.'],
+];
+tags.push(
+  { id: oid('tag-stat'), name: '#stat', slug: 'hash-stat', visibility: 'internal', description: 'Home page stats. Title = label, body = value, excerpt = description. Order = publish date (oldest first).' },
+  { id: oid('tag-workflow'), name: '#workflow', slug: 'hash-workflow', visibility: 'internal', description: 'Home page workflow steps. Title + excerpt. Order = publish date (oldest first).' },
+);
+tagId['#stat'] = oid('tag-stat');
+tagId['#workflow'] = oid('tag-workflow');
+const dataPost = (kind, i, title, slug, paras, excerpt) => {
+  const id = oid(`${kind}-${slug}`);
+  const at = new Date(Date.UTC(2026, 0, 1, 12, i, 0)).toISOString();
+  posts.push({
+    id, uuid: crypto.randomUUID(), title, slug, type: 'post', status: 'published', visibility: 'public',
+    lexical: lexicalText(paras), mobiledoc: null, html: null, custom_excerpt: excerpt, custom_template: null,
+    feature_image: null, featured: false, created_at: at, updated_at: at, published_at: at, author_id: '1',
+  });
+  addTag(id, kind);
+};
+STATS.forEach(([value, label, desc], i) => dataPost('#stat', i, label, `stat-${label.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`, [value], desc));
+STEPS.forEach(([title, desc], i) => dataPost('#workflow', i, title, `step-${title.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`, [], desc));
 
 // ---------------------------------------------------------------- settings & navigation
 const settings = [
@@ -360,6 +423,18 @@ taxonomies:
 // Keep CPT records that are not migrated as objects (data is in the industrial-signage page or unused variants).
 await fs.mkdir(out('unused'), { recursive: true });
 await fs.writeFile(out('unused', 'wp-cpt-records.json'), JSON.stringify({ scenario: scenarios.map((s) => ({ slug: s.slug, meta: s.meta })), industrial_id: industrial.map((s) => ({ slug: s.slug, meta: s.meta })) }, null, 2));
+
+// Cleaned chrome + home sections, used as the starting markup for the theme partials.
+{
+  const $ = cheerio.load(await fs.readFile(cap('pages', 'home', 'rendered.html'), 'utf8'));
+  await fs.mkdir(out('chrome'), { recursive: true });
+  const all = $('section').toArray();
+  for (const s of all) {
+    const id = $(s).attr('id') || 'section';
+    await fs.writeFile(out('chrome', `home-${id}.html`), cleanSections($, [s], 'home'));
+  }
+  // Mobile menu markup (open state) from a sector page is not needed: theme builds it from navigation.
+}
 
 console.table(report);
 console.log('posts', posts.filter((p) => p.type === 'post').length, 'pages', posts.filter((p) => p.type === 'page').length, 'redirects', redirects.length);

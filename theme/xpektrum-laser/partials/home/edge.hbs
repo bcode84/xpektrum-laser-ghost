@@ -1,0 +1,52 @@
+<section id="the-xpektrum-edge" class="bg-background text-foreground relative overflow-hidden py-24 lg:py-32">
+    {{> marquee}}
+    <div class="absolute top-1/4 left-0 w-[500px] h-[500px] bg-primary/5 rounded-full blur-[120px] -translate-x-1/2 pointer-events-none z-0"></div>
+    <div class="absolute bottom-0 right-0 w-[600px] h-[600px] bg-primary/5 rounded-full blur-[150px] translate-x-1/3 translate-y-1/3 pointer-events-none z-0"></div>
+    <div class="container relative z-10 mx-auto px-4 md:px-6">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
+            <div class="lg:col-span-5 flex flex-col gap-8">
+                <div class="xp-reveal" data-reveal="up">
+                    {{#if @custom.edge_eyebrow}}
+                        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-none bg-primary/10 border border-primary/30 text-primary text-sm font-mono mb-6">
+                            {{> icons/shield-check class="w-4 h-4"}}<span>{{@custom.edge_eyebrow}}</span>
+                        </div>
+                    {{/if}}
+                    <h2 class="text-4xl font-bold leading-tight mb-6 tracking-tighter font-default md:text-5xl">{{@custom.edge_title}} <br><span class="bg-gradient-to-r from-primary to-white bg-clip-text text-transparent drop-shadow-sm">{{@custom.edge_title_accent}}</span></h2>
+                    <p class="text-lg text-muted-foreground leading-relaxed font-default">{{@custom.edge_text}}</p>
+                </div>
+                <div class="xp-reveal grid gap-6" data-reveal="up" style="--xp-delay: 200ms">
+                    {{#get "posts" filter="tag:hash-stat" order="published_at asc" limit="6"}}
+                        {{#foreach posts}}
+                            <div class="flex flex-col gap-1 border-l-2 border-primary/20 pl-4 hover:border-primary transition-colors">
+                                <div class="xp-stat-value text-4xl font-bold font-mono text-primary">{{content}}</div>
+                                <span class="text-foreground font-bold text-lg uppercase tracking-tight font-default">{{title}}</span>
+                                <span class="text-muted-foreground text-sm font-sans">{{custom_excerpt}}</span>
+                            </div>
+                        {{/foreach}}
+                    {{/get}}
+                </div>
+                <div class="pt-4">
+                    <a href="/request-a-quote/" class="xp-btn group inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium h-10 px-6 rounded-none bg-primary text-primary-foreground hover:bg-primary/90 hover:shadow-[0_0_15px_rgba(0,242,255,0.5)] transition-all">Request a Quote{{> icons/arrow-right class="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform"}}</a>
+                </div>
+            </div>
+            <div class="xp-reveal lg:col-span-7 relative" data-reveal="left" style="--xp-delay: 300ms">
+                <div class="text-card-foreground flex flex-col gap-6 py-6 bg-card/40 backdrop-blur-md border border-border/50 rounded-none shadow-2xl shadow-primary/5 relative overflow-hidden">
+                    <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-primary/50 via-white/20 to-primary/50"></div>
+                    <div class="grid auto-rows-min items-start gap-1.5 px-6 pb-8">
+                        <h3 class="font-semibold text-xl items-center gap-2 uppercase tracking-wider">{{> icons/activity class="w-5 h-5 text-primary"}}Production Efficiency Metrics</h3>
+                        <p class="text-muted-foreground text-base font-default">Comparing Xpektrum industrial output vs. standard consumer-grade laser systems.</p>
+                    </div>
+                    <div class="px-6">
+                        {{> chart}}
+                    </div>
+                </div>
+                <div class="absolute -right-4 top-1/4 bg-card/90 backdrop-blur-sm border border-primary/30 p-3 rounded-none shadow-lg animate-pulse hidden md:block" aria-hidden="true">
+                    <div class="flex items-center gap-2">
+                        <div class="w-2 h-2 rounded-full bg-primary animate-ping"></div>
+                        <span class="text-xs font-mono text-primary uppercase tracking-widest">Laser Active</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

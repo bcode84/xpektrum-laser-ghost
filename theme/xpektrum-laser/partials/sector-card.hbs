@@ -1,0 +1,16 @@
+{{!-- One sector card. The whole card links to the sector page ("View Industry Specs"). Icon by position. --}}
+<a href="{{url}}" class="xp-sector-card text-card-foreground flex flex-col gap-6 py-6 group relative overflow-hidden rounded-none border border-border bg-card transition-all duration-300 hover:border-primary/50 hover:shadow-[0_0_20px_rgba(0,242,255,0.15)] focus-visible:border-primary">
+    <div class="absolute left-0 top-0 z-10 h-[2px] w-full bg-primary opacity-0 transition-all duration-700 ease-in-out group-hover:translate-y-[400px] group-hover:opacity-100" aria-hidden="true"></div>
+    <div class="grid auto-rows-min items-start gap-1.5 px-6 pb-4">
+        <div class="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-none bg-secondary text-primary transition-colors duration-300 group-hover:bg-primary group-hover:text-primary-foreground">
+            {{#match @number 1}}{{> icons/wrench class="h-6 w-6"}}{{/match}}
+            {{#match @number 2}}{{> icons/car class="h-6 w-6"}}{{/match}}
+            {{#match @number 3}}{{> icons/user-plus class="h-6 w-6"}}{{/match}}
+        </div>
+        <h3 class="font-default text-2xl font-bold tracking-tight text-foreground">{{#if og_title}}{{og_title}}{{else}}{{title}}{{/if}}</h3>
+    </div>
+    <div class="px-6">
+        <p class="font-default text-base leading-relaxed text-muted-foreground">{{custom_excerpt}}</p>
+        <div class="mt-6"><span class="font-mono text-xs font-bold uppercase tracking-widest text-primary opacity-0 transition-opacity duration-300 group-hover:opacity-100 group-focus-visible:opacity-100">View Industry Specs →</span></div>
+    </div>
+</a>

@@ -1,0 +1,36 @@
+{{!--
+    Project tile. Links to the project post; with JS the click opens the inline <dialog> instead (like the live site).
+    Custom excerpt = "MATERIAL: … / CLIENT: …" line.
+--}}
+<div class="xp-project">
+    <a href="{{url}}" data-xp-dialog="project-{{slug}}" class="xp-project-link w-full h-full text-left outline-none group block relative overflow-hidden bg-card border border-border/10 focus-visible:ring-2 focus-visible:ring-primary">
+        <div class="xp-project-media relative w-full">
+            {{#if feature_image}}
+                <img class="absolute inset-0 object-cover w-full h-full transition-transform duration-700 ease-out group-hover:scale-110"
+                    sizes="(min-width: 768px) 58vw, 100vw"
+                    srcset="{{img_url feature_image size="s" format="webp"}} 400w, {{img_url feature_image size="m" format="webp"}} 750w, {{img_url feature_image size="l" format="webp"}} 1140w"
+                    src="{{img_url feature_image size="m"}}"
+                    alt="{{#if feature_image_alt}}{{feature_image_alt}}{{else}}{{title}}{{/if}}"
+                    loading="lazy" decoding="async">
+            {{/if}}
+            <div class="xp-project-overlay absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 group-focus-visible:opacity-100 transition-all duration-500 bg-background/80 backdrop-blur-md">
+                <div class="text-center transform translate-y-8 group-hover:translate-y-0 transition-transform duration-500 ease-out px-6">
+                    {{#if custom_excerpt}}<span class="text-primary font-mono text-xs md:text-sm uppercase tracking-widest mb-2 block opacity-90">{{custom_excerpt}}</span>{{/if}}
+                    <h3 class="text-2xl md:text-4xl font-default font-bold text-foreground tracking-tighter uppercase">{{title}}</h3>
+                </div>
+            </div>
+        </div>
+    </a>
+    <dialog id="project-{{slug}}" class="xp-dialog bg-card text-foreground border border-border" aria-labelledby="project-{{slug}}-title">
+        <div class="relative">
+            {{#if feature_image}}<img class="w-full aspect-video object-cover" src="{{img_url feature_image size="l"}}" alt="" loading="lazy" decoding="async">{{/if}}
+            <div class="p-6 md:p-8">
+                {{#if custom_excerpt}}<p class="text-primary font-mono text-xs uppercase tracking-widest mb-2">{{custom_excerpt}}</p>{{/if}}
+                <h3 id="project-{{slug}}-title" class="text-2xl md:text-3xl font-default font-bold tracking-tighter uppercase mb-4">{{title}}</h3>
+                <div class="text-muted-foreground leading-relaxed">{{content}}</div>
+                <a href="{{url}}" class="mt-6 inline-flex items-center gap-2 font-mono text-xs uppercase tracking-widest text-primary hover:underline">Project page {{> icons/arrow-right class="w-4 h-4"}}</a>
+            </div>
+            <button type="button" class="xp-dialog-close absolute top-4 right-4 inline-flex items-center justify-center size-9 bg-background/80 border border-border text-foreground hover:text-primary" aria-label="Close">{{> icons/x class="size-4"}}</button>
+        </div>
+    </dialog>
+</div>

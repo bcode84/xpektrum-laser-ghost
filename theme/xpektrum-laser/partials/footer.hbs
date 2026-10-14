@@ -1,0 +1,52 @@
+<footer id="footer" class="bg-background text-foreground py-16 font-sans text-xs border-t border-border">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8">
+            <div class="flex flex-col items-start gap-6">
+                <a href="{{@site.url}}" class="inline-block">
+                    {{#if @site.logo}}<img class="h-12 w-auto object-contain" src="{{img_url @site.logo size="s"}}" alt="{{@site.title}}" width="153" height="48" loading="lazy" decoding="async">{{else}}{{@site.title}}{{/if}}
+                </a>
+                <p class="text-muted-foreground leading-relaxed max-w-xs font-sans">{{@site.description}}</p>
+            </div>
+
+            <div class="flex flex-col gap-6">
+                <h2 class="font-default text-sm font-bold uppercase tracking-widest text-foreground">Navigation</h2>
+                <ul class="space-y-3">
+                    {{#foreach @site.secondary_navigation}}
+                        <li><a href="{{url absolute="true"}}" class="text-muted-foreground hover:text-primary transition-colors duration-200 flex items-center gap-2 group font-sans"><span class="h-px w-2 bg-primary/50 group-hover:w-4 transition-all duration-200"></span>{{label}}</a></li>
+                    {{/foreach}}
+                </ul>
+            </div>
+
+            <div class="flex flex-col gap-6">
+                <h2 class="font-default text-sm font-bold uppercase tracking-widest text-foreground">Studio HQ</h2>
+                <ul class="space-y-4 text-muted-foreground font-sans">
+                    {{#if @custom.address}}<li class="flex items-start gap-3">{{> icons/map-pin class="size-4 shrink-0 text-primary mt-0.5"}}<span class="leading-tight">{{@custom.address}}</span></li>{{/if}}
+                    {{#if @custom.phone}}<li class="flex items-center gap-3">{{> icons/phone class="size-4 shrink-0 text-primary"}}<a class="hover:text-primary transition-colors" href="tel:{{@custom.phone}}">{{@custom.phone}}</a></li>{{/if}}
+                    {{#if @custom.email}}<li class="flex items-center gap-3">{{> icons/mail class="size-4 shrink-0 text-primary"}}<a class="hover:text-primary transition-colors" href="mailto:{{@custom.email}}">{{@custom.email}}</a></li>{{/if}}
+                </ul>
+            </div>
+
+            <div class="flex flex-col gap-6">
+                <h2 class="font-default text-sm font-bold uppercase tracking-widest text-foreground">Connect</h2>
+                <p class="text-muted-foreground mb-2 font-sans">Follow our latest industrial projects and material explorations on our social channels.</p>
+                <div class="flex flex-wrap gap-2">
+                    {{#if @custom.linkedin_url}}<a href="{{@custom.linkedin_url}}" aria-label="LinkedIn" rel="me noopener" target="_blank" class="inline-flex items-center justify-center size-9 rounded-none border border-border bg-transparent hover:bg-primary hover:text-primary-foreground hover:border-primary transition-all duration-300 hover:shadow-[0_0_15px_rgba(0,242,255,0.3)]">{{> icons/linkedin class="size-4"}}</a>{{/if}}
+                    {{#if @custom.instagram_url}}<a href="{{@custom.instagram_url}}" aria-label="Instagram" rel="me noopener" target="_blank" class="inline-flex items-center justify-center size-9 rounded-none border border-border bg-transparent hover:bg-primary hover:text-primary-foreground hover:border-primary transition-all duration-300 hover:shadow-[0_0_15px_rgba(0,242,255,0.3)]">{{> icons/instagram class="size-4"}}</a>{{/if}}
+                </div>
+            </div>
+        </div>
+
+        <div class="mt-16 pt-6 border-t border-border flex flex-col md:flex-row justify-between items-center gap-4">
+            <p class="text-muted-foreground text-center md:text-left font-sans">&copy; {{date format="YYYY"}} {{@site.title}}.</p>
+            {{#if @custom.status_text}}
+                <div class="flex items-center gap-3 bg-secondary/30 px-4 py-2 rounded-none border border-border/50">
+                    <div class="relative flex size-2.5" aria-hidden="true">
+                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-500 opacity-75"></span>
+                        <span class="relative inline-flex rounded-full size-2.5 bg-emerald-500"></span>
+                    </div>
+                    <span class="font-mono text-[10px] uppercase tracking-widest text-foreground font-medium">{{@custom.status_text}}</span>
+                </div>
+            {{/if}}
+        </div>
+    </div>
+</footer>

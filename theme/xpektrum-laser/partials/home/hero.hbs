@@ -1,0 +1,42 @@
+<section id="precision-laser-engineering-for-b2b" class="bg-background text-foreground relative w-full overflow-hidden">
+    <div class="grid lg:grid-cols-2 min-h-[100svh]">
+        <div class="bg-background flex flex-col justify-center px-6 py-24 lg:px-16 xl:px-24 relative z-10">
+            <div class="xp-reveal" data-reveal="up">
+                {{#if @custom.hero_eyebrow}}
+                    <div class="inline-flex items-center gap-2 px-4 py-2 rounded-none bg-primary/10 text-primary text-sm font-medium mb-8 border border-primary/20">
+                        {{> icons/trending-up class="w-4 h-4"}}<span class="font-mono uppercase tracking-widest">{{@custom.hero_eyebrow}}</span>
+                    </div>
+                {{/if}}
+                <h1 class="text-4xl md:text-5xl lg:text-6xl font-default font-bold text-foreground leading-[1.1] mb-6 uppercase tracking-tighter">{{@custom.hero_title}}<br><span class="text-primary">{{@custom.hero_title_accent}}</span></h1>
+                {{#if custom_excerpt}}
+                    <p class="text-lg md:text-xl text-muted-foreground font-sans mb-10 max-w-xl leading-relaxed">{{custom_excerpt}}</p>
+                {{/if}}
+                <div class="flex flex-col sm:flex-row gap-4">
+                    <a href="/request-a-quote/" class="xp-btn group inline-flex items-center justify-center gap-2 whitespace-nowrap transition-all bg-primary text-primary-foreground hover:bg-primary/90 hover:shadow-[0_0_20px_rgba(0,242,255,0.4)] rounded-none px-8 h-14 text-base font-default font-bold uppercase tracking-wider">Start Production {{> icons/arrow-right class="ml-2 w-5 h-5 transition-transform group-hover:translate-x-1"}}</a>
+                    <a href="/co2-laser-specifications/" class="inline-flex items-center justify-center gap-2 whitespace-nowrap font-medium transition-all border border-foreground/20 bg-input/30 text-foreground hover:bg-foreground/5 rounded-none px-8 h-14 text-base font-default uppercase tracking-wider">View Specifications</a>
+                </div>
+            </div>
+        </div>
+        <div class="bg-background relative flex items-center justify-center px-6 py-24 lg:p-16">
+            <div class="xp-reveal relative w-full max-w-md lg:max-w-lg aspect-[4/5] lg:aspect-square" data-reveal="zoom">
+                {{#if feature_image}}
+                    <picture>
+                        <source type="image/avif" sizes="(min-width: 1024px) 512px, 90vw" srcset="{{img_url feature_image size="s" format="avif"}} 400w, {{img_url feature_image size="m" format="avif"}} 750w, {{img_url feature_image size="l" format="avif"}} 1140w">
+                        <img class="w-full h-full object-cover rounded-none contrast-125 shadow-2xl"
+                            sizes="(min-width: 1024px) 512px, 90vw"
+                            srcset="{{img_url feature_image size="s"}} 400w, {{img_url feature_image size="m"}} 750w, {{img_url feature_image size="l"}} 1140w"
+                            src="{{img_url feature_image size="m"}}"
+                            alt="{{#if feature_image_alt}}{{feature_image_alt}}{{else}}{{title}}{{/if}}"
+                            width="800" height="800" fetchpriority="high" decoding="async">
+                    </picture>
+                {{/if}}
+                <div class="absolute -bottom-12 left-1/2 -translate-x-1/2 w-[90%] max-w-sm lg:hidden z-20">
+                    {{> home/job-card}}
+                </div>
+            </div>
+        </div>
+        <div class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-30 hidden lg:block w-80 transition-transform duration-500 hover:-translate-y-[52%]" aria-hidden="true">
+            {{> home/job-card}}
+        </div>
+    </div>
+</section>

@@ -1,0 +1,16 @@
+{{!-- Recent projects = posts tagged "project" (newest first). Grid spans/ratios follow the live 7/5 · 5/7 pattern (screen.css). --}}
+<section id="recent-commercial-projects" class="bg-background text-foreground py-24 md:py-32 px-4 md:px-8 overflow-hidden">
+    <div class="max-w-7xl mx-auto">
+        <div class="mb-16 md:mb-24 max-w-2xl">
+            <h2 class="text-4xl md:text-6xl font-default font-bold tracking-tighter mb-6 uppercase">Recent Projects</h2>
+            <p class="text-lg md:text-xl text-muted-foreground font-default leading-relaxed">Precision laser engraving and cutting solutions for Montreal's leading agencies and industrial partners. Explore our latest commercial work.</p>
+        </div>
+        <div class="xp-projects grid grid-cols-1 md:grid-cols-12 gap-4 md:gap-6">
+            {{#get "posts" filter="tag:project" limit="4" include="tags"}}
+                {{#foreach posts}}
+                    {{> project-card}}
+                {{/foreach}}
+            {{/get}}
+        </div>
+    </div>
+</section>

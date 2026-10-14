@@ -1,0 +1,14 @@
+{{!< default}}
+{{!--
+    Quote: full-width content containing the quote form (form[data-xp-form="quote"]).
+    main.js posts it (FormData, Accept: application/json) to the hosted form service set in Design → Quote form endpoint.
+    Without an endpoint it opens a pre-filled email instead. The form needs JS (the HTML card has no server action).
+--}}
+{{#page}}
+<article class="{{post_class}} xp-full-width" data-xp-quote
+    data-endpoint="{{@custom.quote_form_endpoint}}"
+    data-email="{{@custom.email}}"
+    data-success="{{@custom.quote_success_message}}">
+    {{content}}
+</article>
+{{/page}}

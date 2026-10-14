@@ -1,0 +1,15 @@
+{{!-- Featured sector cards = pages tagged #sector-featured (oldest first). Card title = Facebook/OG title (fallback: page title), text = excerpt. --}}
+<section id="sector-specific-solutions" class="w-full bg-background py-16 md:py-24">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div class="mb-12 text-center">
+            <h2 class="font-default text-3xl font-bold tracking-tighter text-foreground md:text-5xl uppercase">Sector-Specific Solutions</h2>
+        </div>
+        <div class="grid grid-cols-1 gap-8 md:grid-cols-3">
+            {{#get "pages" filter="tag:hash-sector-featured" order="published_at asc" limit="3"}}
+                {{#foreach pages}}
+                    {{> sector-card}}
+                {{/foreach}}
+            {{/get}}
+        </div>
+    </div>
+</section>
