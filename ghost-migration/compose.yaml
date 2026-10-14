@@ -1,7 +1,7 @@
 # Ghost 6 + MySQL 8.0 for laser.xpektrum.com.
-#   Local:       cp .env.example .env && make up && make import
-#   Production:  set GHOST_URL/DOMAIN in .env, then `docker compose --profile production up -d`
-# Images: ghost:6-alpine (Ghost 6.x, checked on Docker Hub 2026-10-13: 6.69.0), mysql:8.0 (never :latest).
+#   Local (from the repo root):  make env && make up && make import
+#   Production:  set GHOST_URL/DOMAIN in .env, then `docker compose --profile production up -d` (see README.md)
+# Images: ghost:6-alpine (floats within Ghost major 6; 6.70 on 2026-10-13), mysql:8.0 (never :latest).
 name: xpektrum
 
 services:
@@ -23,6 +23,15 @@ services:
       retries: 12
       start_period: 40s
 
+  # One-shot: on a fresh volume Docker creates content/themes/ as root (for the nested theme bind mount), and the
+  # "node" user below can then not link the bundled themes into it, so Ghost crash-loops. Create it as node first.
+  ghost-init:
+    image: ghost:6-alpine
+    user: root
+    entrypoint: ["sh", "-c", "mkdir -p /var/lib/ghost/content/themes && chown node:node /var/lib/ghost/content /var/lib/ghost/content/themes"]
+    volumes:
+      - ghost-content:/var/lib/ghost/content
+
   ghost:
     image: ghost:6-alpine
     restart: unless-stopped
@@ -32,6 +41,8 @@ services:
     depends_on:
       db:
         condition: service_healthy
+      ghost-init:
+        condition: service_completed_successfully
     environment:
       NODE_ENV: production
       url: ${GHOST_URL:-http://localhost:2368}
