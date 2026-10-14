@@ -9,6 +9,15 @@ import path from 'node:path';
 import crypto from 'node:crypto';
 
 const root = path.resolve(process.argv[2] || '.');
+// Name-based UUID (v5 layout, SHA-1 of the slug) so rebuilding the import is reproducible.
+const stableUuid = (slug) => {
+  const h = crypto.createHash('sha1').update(`xpektrum-laser:${slug}`).digest();
+  h[6] = (h[6] & 0x0f) | 0x50; h[8] = (h[8] & 0x3f) | 0x80;
+  const x = h.subarray(0, 16).toString('hex');
+  return `${x.slice(0, 8)}-${x.slice(8, 12)}-${x.slice(12, 16)}-${x.slice(16, 20)}-${x.slice(20)}`;
+};
+// Fixed build timestamp (the capture date) for reproducible output.
+const BUILD_DATE = new Date('2026-10-13T12:00:00Z');
 const cap = (...p) => path.join(root, 'capture', ...p);
 const out = (...p) => path.join(root, 'content-export', ...p);
 const readJSON = async (p) => JSON.parse(await fs.readFile(p, 'utf8'));
@@ -158,11 +167,23 @@ function cleanSections($, sections, slug) {
     }
   });
   $wrap.find('[style=""]').removeAttr('style');
+  // Unlabelled prev/next chevrons over single images (e.g. /industrial-signage/): inert on the live site too,
+  // and nameless buttons for screen readers. Real carousels ([data-slot="carousel"]) keep theirs.
+  $wrap.find('button:not([aria-label])').each((_, el) => {
+    const $b = $(el);
+    if ($b.closest('[data-slot="carousel"]').length || $b.text().trim()) return;
+    if (!$b.find('svg.lucide-chevron-left, svg.lucide-chevron-right').length) return;
+    const $group = $b.parent();
+    $b.remove();
+    if (!$group.children().length) $group.remove();
+  });
   // Social placeholders inside content are dropped later by theme settings; phone/email become real links.
   let html = $wrap.html();
   html = html
     .replace(/\+1 \(514\) 555-0198/g, PHONE)
     .replace(/>CONTAT</g, '>CONTACT<')
+    // Orange text at 50–70 % opacity is 3.8:1 or less on the background (WCAG AA needs 4.5:1).
+    .replace(/\btext-primary\/(50|60|70)(?![\w/])/g, 'text-primary')
     .replace(/\s+(?=<\/(h1|h2|h3|p|span)>)/g, '')
     .replace(/<!--[\s\S]*?-->/g, '')
     .replace(/\n\s*\n/g, '\n');
@@ -190,7 +211,7 @@ const lexicalText = (paras) => JSON.stringify({
   },
 });
 const oid = (seed) => crypto.createHash('md5').update(seed).digest('hex').slice(0, 24);
-const now = new Date().toISOString();
+const now = BUILD_DATE.toISOString();
 
 // ---------------------------------------------------------------- source data
 const wpPages = await readJSON(cap('wp-json', 'pages.json'));
@@ -273,7 +294,7 @@ for (const wp of wpPages) {
   }
   const featured = HOME_SECTORS[slug];
   posts.push({
-    id, uuid: crypto.randomUUID(), title, slug, type: 'page', status: 'published', visibility: 'public',
+    id, uuid: stableUuid(slug), title, slug, type: 'page', status: 'published', visibility: 'public',
     lexical, mobiledoc: null, html: null,
     custom_excerpt: featured ? featured.card_text : (slug === 'home' ? HOME_HERO.excerpt : null),
     custom_template: TEMPLATE[slug] || (SECTOR_SLUGS.includes(slug) ? 'custom-sector' : 'custom-full-width'),
@@ -318,7 +339,7 @@ PROJECTS.forEach((p, i) => {
   // Newest first on the home page → publish in reverse order.
   const published = new Date(Date.UTC(2026, 4, 1, 12, 0, 10 - i)).toISOString();
   posts.push({
-    id, uuid: crypto.randomUUID(), title: p.title, slug: p.slug, type: 'post', status: 'published', visibility: 'public',
+    id, uuid: stableUuid(p.slug), title: p.title, slug: p.slug, type: 'post', status: 'published', visibility: 'public',
     lexical: lexicalText([p.body]), mobiledoc: null, html: null,
     custom_excerpt: p.excerpt, custom_template: null,
     feature_image: img?.url || null, featured: p.layout === 'wide',
@@ -353,7 +374,7 @@ const dataPost = (kind, i, title, slug, paras, excerpt) => {
   const id = oid(`${kind}-${slug}`);
   const at = new Date(Date.UTC(2026, 0, 1, 12, i, 0)).toISOString();
   posts.push({
-    id, uuid: crypto.randomUUID(), title, slug, type: 'post', status: 'published', visibility: 'public',
+    id, uuid: stableUuid(slug), title, slug, type: 'post', status: 'published', visibility: 'public',
     lexical: lexicalText(paras), mobiledoc: null, html: null, custom_excerpt: excerpt, custom_template: null,
     feature_image: null, featured: false, created_at: at, updated_at: at, published_at: at, author_id: '1',
   });
@@ -384,7 +405,7 @@ const settings = [
 
 const ghostImport = {
   db: [{
-    meta: { exported_on: Date.now(), version: '6.0.0' },
+    meta: { exported_on: BUILD_DATE.getTime(), version: '6.0.0' },
     data: { posts, posts_meta: postsMeta, tags, posts_tags: postsTags, settings, users: [], posts_authors: [] },
   }],
 };
