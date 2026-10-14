@@ -3,8 +3,9 @@
 # and images, upload routes/redirects, apply settings and print a verification report.
 # Idempotent: safe to re-run. Content is imported only once unless FORCE_IMPORT=1 (which wipes Ghost content first).
 #
-# Usage: scripts/bootstrap.sh            (from ghost-migration/)
+# Usage: scripts/bootstrap.sh            (from ghost-migration/, or `make import` from the repo root)
 #        FORCE_IMPORT=1 scripts/bootstrap.sh
+#        ENV_FILE=other.env scripts/bootstrap.sh   (e.g. a throwaway stack: COMPOSE_PROJECT_NAME + GHOST_PORT in that file)
 set -euo pipefail
 
 HERE="$(cd "$(dirname "$0")/.." && pwd)"
@@ -12,8 +13,10 @@ ROOT="$(cd "$HERE/.." && pwd)"
 EXPORT="$ROOT/content-export"
 cd "$HERE"
 
-[ -f .env ] || { echo "Missing ghost-migration/.env (copy .env.example)"; exit 1; }
-set -a; . ./.env; set +a
+ENV_FILE="${ENV_FILE:-.env}"
+[ -f "$ENV_FILE" ] || { echo "Missing ghost-migration/$ENV_FILE (copy .env.example)"; exit 1; }
+# Exported, so `docker compose` below sees the same values (shell env beats the .env file).
+set -a; . "$ENV_FILE"; set +a
 
 GHOST_URL="${GHOST_URL%/}"
 API_BASE="http://127.0.0.1:${GHOST_PORT:-2368}"
@@ -42,9 +45,12 @@ docker compose up -d --wait >/dev/null 2>&1 || { docker compose ps; exit 1; }
 c_ok "db and ghost healthy"
 
 # ---------------------------------------------------------------- 2. content package
+# ghost-import.json and the optimized images are committed; the zip is not. (Regenerating the JSON itself
+# needs the local Phase 1 capture: `npm run content`.)
 if [ ! -f "$EXPORT/ghost-import.zip" ]; then
     c_info "Packaging content import"
-    (cd "$ROOT" && node tools/build-content.mjs . >/dev/null && tools/package-import.sh . >/dev/null)
+    command -v zip >/dev/null || { echo "zip is required to package the import"; exit 1; }
+    "$ROOT/tools/package-import.sh" "$ROOT" >/dev/null
 fi
 [ -f "$ROOT/theme/xpektrum-laser/assets/built/screen.css" ] || { echo "Theme not built: run 'npm run build' in the repo root"; exit 1; }
 
