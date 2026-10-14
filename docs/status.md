@@ -67,3 +67,16 @@ All pages are below 3 % pixel mismatch except `commercial-signage` (8.45 %). The
 ## Progress log
 
 - [x] Step 1 audit, Step 2 this file
+- [x] 3.1 Committed staged chart/container fixes and visual-diff tooling (05462bc, 48de98e)
+- [x] 3.1/3.2 Phase 2 export and theme templates needed no changes (import valid, gscan clean)
+- [x] 3.3 Makefile (564154c). Bootstrap: ENV_FILE, and zips the committed JSON instead of rebuilding from the capture (18f9e97)
+- [x] 3.4 Clean-room install on a throwaway project (port 2369) found a **crash loop on fresh volumes** (root-owned content/themes); fixed with the ghost-init service (a96a32c). After the fix: `make up && make import` passes 24/24 checks, a re-run is a no-op, and backup → mutate → restore brings back both the DB and the images
+- [x] 3.5a Visual diff, 15 pages × 1440/768/390 (`visual-diff/report.json`; heights at 390 are device px, DPR 2). 36 of 45 captures are under 3 % mismatch. Every outlier was inspected; none is a layout regression:
+  - Sector pages +249 px at 1440 (+351 CSS px at 390): the intentional "Other sectors" link strip.
+  - `private-events`/`events-weddings`/`hospitality` @390 (27 % / 20 % / 5 %): the live hero background is a 10-second opacity `pulse` layer behind 10Web's lazy background loader, so the screenshots catch different frames. Layout is identical.
+  - `home` @390 (6.9 %): 1–2 px text baseline offsets plus the deliberate dark text on orange buttons (contrast decision).
+  - `commercial-signage` (8 %): the live hero uses `bg-[url(...)]`, which the 10Web Tailwind build never compiled, so live visitors see no photo. The rebuild shows the photo the author intended. **Owner: keep it or remove it** (one line in the page's HTML card).
+  - `solutions` (−90 px, 3–6 %): the live orphan page has its own cyan palette and header. The migration normalised it to the site's orange theme and shared header.
+  - Fixed in the tool: `scroll-behavior: smooth` left full-page shots mid-scroll (sticky header drawn mid-page). The tool now scrolls with `behavior: 'instant'`, and `report.json` merges instead of being overwritten.
+- [ ] 3.5b Lighthouse, link/image crawl
+- [ ] 3.6 README

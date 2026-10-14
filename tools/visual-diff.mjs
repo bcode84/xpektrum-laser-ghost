@@ -23,8 +23,9 @@ for (const w of widths) {
     const url = base.replace(/\/$/, '') + (slug === 'home' ? '/' : `/${slug}/`);
     await page.goto(url, { waitUntil: 'networkidle' });
     await page.evaluate(async () => {
-      for (let y = 0; y < document.body.scrollHeight; y += window.innerHeight / 2) { window.scrollTo(0, y); await new Promise((r) => setTimeout(r, 150)); }
-      window.scrollTo(0, 0);
+      // behavior 'instant': the theme sets scroll-behavior: smooth, which would leave the page mid-scroll.
+      for (let y = 0; y < document.body.scrollHeight; y += window.innerHeight / 2) { window.scrollTo({ top: y, behavior: 'instant' }); await new Promise((r) => setTimeout(r, 150)); }
+      window.scrollTo({ top: 0, behavior: 'instant' });
     });
     await page.waitForTimeout(1200);
     const dir = path.join(outDir, slug);
@@ -61,4 +62,10 @@ for (const w of widths) {
   await ctx.close();
 }
 await browser.close();
-await fs.writeFile(path.join(outDir, 'report.json'), JSON.stringify(report, null, 2));
+// Merge into an existing report so partial runs (one slug, one width) don't drop earlier results.
+const reportFile = path.join(outDir, 'report.json');
+const previous = JSON.parse(await fs.readFile(reportFile, 'utf8').catch(() => '[]'));
+const key = (e) => `${e.slug}@${e.width}`;
+const merged = new Map(previous.map((e) => [key(e), e]));
+for (const e of report) merged.set(key(e), e);
+await fs.writeFile(reportFile, JSON.stringify([...merged.values()].sort((a, b) => key(a).localeCompare(key(b))), null, 2));
