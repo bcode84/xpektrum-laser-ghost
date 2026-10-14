@@ -1,0 +1,51 @@
+{
+  "base": "http://localhost:2368/",
+  "pages": {
+    "http://localhost:2368/": 200,
+    "http://localhost:2368/industrial-labels/": 200,
+    "http://localhost:2368/industrial-signage/": 200,
+    "http://localhost:2368/commercial-signage/": 200,
+    "http://localhost:2368/hospitality/": 200,
+    "http://localhost:2368/private-events/": 200,
+    "http://localhost:2368/events-weddings/": 200,
+    "http://localhost:2368/corporate-gifts/": 200,
+    "http://localhost:2368/corporate-branding/": 200,
+    "http://localhost:2368/about/": 200,
+    "http://localhost:2368/request-a-quote/": 200,
+    "http://localhost:2368/co2-laser-specifications/": 200,
+    "http://localhost:2368/projects/industrial-panel-tags/": 200,
+    "http://localhost:2368/projects/bespoke-menu-boards/": 200,
+    "http://localhost:2368/projects/custom-branding-for-corporate-gifting/": 200,
+    "http://localhost:2368/projects/architectural-signage/": 200,
+    "http://localhost:2368/solutions/": 200,
+    "http://localhost:2368/portfolio/": 200
+  },
+  "assetsChecked": 134,
+  "brokenPages": [],
+  "brokenAssets": [],
+  "external": {
+    "https://cdn.jsdelivr.net/ghost/sodo-search@~1.9/umd/sodo-search.min.js": [
+      "http://localhost:2368/",
+      "http://localhost:2368/industrial-labels/",
+      "http://localhost:2368/industrial-signage/",
+      "http://localhost:2368/commercial-signage/",
+      "http://localhost:2368/hospitality/",
+      "http://localhost:2368/private-events/",
+      "http://localhost:2368/events-weddings/",
+      "http://localhost:2368/corporate-gifts/",
+      "http://localhost:2368/corporate-branding/",
+      "http://localhost:2368/about/",
+      "http://localhost:2368/request-a-quote/",
+      "http://localhost:2368/co2-laser-specifications/",
+      "http://localhost:2368/projects/industrial-panel-tags/",
+      "http://localhost:2368/projects/bespoke-menu-boards/",
+      "http://localhost:2368/projects/custom-branding-for-corporate-gifting/",
+      "http://localhost:2368/projects/architectural-signage/",
+      "http://localhost:2368/solutions/",
+      "http://localhost:2368/portfolio/"
+    ],
+    "data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.02'/%3E%3C/svg%3E": [
+      "http://localhost:2368/events-weddings/"
+    ]
+  }
+}
